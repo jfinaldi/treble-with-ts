@@ -58,7 +58,6 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
     new Tone.Synth({
       oscillator: { type: 'sine' } as Tone.OmniOscillatorOptions,
     }).toDestination(),
-    //new Tone.Player( '../public/assets/Cat-meow-short.mp3' ).toDestination(),
   );
 
   const notes = state.get('notes');
@@ -76,7 +75,6 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
       new Tone.Part((time, value) => {
         // the value is an object which contains both the note and the velocity
         synth.triggerAttackRelease(value.note, '4n', time, value.velocity);
-        //synth.start();
         if (value.idx === eachNote.length - 1) {
           dispatch(new DispatchAction('STOP_SONG'));
         }
