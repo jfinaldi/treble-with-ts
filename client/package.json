@@ -52,5 +52,5 @@
       "@types/carbon__icons-react": "^10.31.1",
       "@types/react-router-dom": "^5.1.8"
    },
-   "proxy": "http://localhost:3001"
+   "proxy": "http://localhost:3001/"
 }

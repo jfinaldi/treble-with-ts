@@ -12,7 +12,7 @@ app.get("/drums", (req, res) => {
   const path = require("path");
   const beat_file = `${req.query.type_beat}.wav`;
   const returnData = {};
-  const filePath = path.join(__dirname, beat_file);
+  const filePath = path.join(__dirname + "/sounds/drums", beat_file);
   fs.readFile(filePath, function (err, file) {
     var base64File = Buffer.from(file, "binary").toString("base64");
     returnData.fileContent = base64File;
