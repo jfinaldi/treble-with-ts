@@ -1,10 +1,11 @@
 // 3rd party library imports
-import React, { useState, useEffect } from 'react';
-import * as Tone from 'tone';
+import { Unknown32 } from "@carbon/icons-react";
+import React, { useState, useEffect } from "react";
+import * as Tone from "tone";
 
 // project imports
-import { DispatchAction } from './Reducer';
-import { AppState } from './State';
+import { DispatchAction } from "./Reducer";
+import { AppState } from "./State";
 
 /** ------------------------------------------------------------------------ **
  * Contains implementation of an Instruments.
@@ -15,6 +16,7 @@ export interface InstrumentProps {
   dispatch: React.Dispatch<DispatchAction>;
   name: string;
   synth: Tone.Synth;
+  // synth: Tone.Player;
   setSynth: (f: (oldSynth: Tone.Synth) => Tone.Synth) => void;
 }
 
@@ -30,11 +32,7 @@ export class Instrument {
 
 function TopNav({ name }: { name: string }) {
   return (
-    <div
-      className={
-        'w-100 h3 bb b--light-gray flex justify-between items-center ph4'
-      }
-    >
+    <div className={"w-100 h3 bb b--light-gray flex justify-between items-center ph4"}>
       <div>{name}</div>
     </div>
   );
@@ -46,23 +44,19 @@ interface InstrumentContainerProps {
   instrument: Instrument;
 }
 
-export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
-  instrument,
-  state,
-  dispatch,
-}: InstrumentContainerProps) => {
+export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({ instrument, state, dispatch }: InstrumentContainerProps) => {
   const InstrumentComponent = instrument.component;
   const [synth, setSynth] = useState(
     new Tone.Synth({
-      oscillator: { type: 'sine' } as Tone.OmniOscillatorOptions,
-    }).toDestination(),
+      oscillator: { type: "sine" } as Tone.OmniOscillatorOptions,
+    }).toDestination()
   );
 
-  const notes = state.get('notes');
+  const notes = state.get("notes");
 
   useEffect(() => {
     if (notes && synth) {
-      let eachNote = notes.split(' ');
+      let eachNote = notes.split(" ");
       let noteObjs = eachNote.map((note: string, idx: number) => ({
         idx,
         time: `+${idx / 4}`,
@@ -72,9 +66,9 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
 
       new Tone.Part((time, value) => {
         // the value is an object which contains both the note and the velocity
-        synth.triggerAttackRelease(value.note, '4n', time, value.velocity);
+        synth.triggerAttackRelease(value.note, "4n", time, value.velocity);
         if (value.idx === eachNote.length - 1) {
-          dispatch(new DispatchAction('STOP_SONG'));
+          dispatch(new DispatchAction("STOP_SONG"));
         }
       }, noteObjs).start(0);
 
@@ -91,17 +85,8 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({
   return (
     <div>
       <TopNav name={instrument.name} />
-      <div
-        className={'bg-white absolute right-0 left-0'}
-        style={{ top: '4rem' }}
-      >
-        <InstrumentComponent
-          name={instrument.name}
-          state={state}
-          dispatch={dispatch}
-          synth={synth}
-          setSynth={setSynth}
-        />
+      <div className={"bg-white absolute right-0 left-0"} style={{ top: "4rem" }}>
+        <InstrumentComponent name={instrument.name} state={state} dispatch={dispatch} synth={synth} setSynth={setSynth} />
       </div>
     </div>
   );
