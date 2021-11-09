@@ -2,12 +2,44 @@ import * as Tone from "tone";
 import { Instrument } from "../Instruments";
 
 const flute = {
-    width: "1000px",
+    width: "980px",
     height: "100px",
-    borderRadius: "50px/25px",
-    backgroundColor: "rgba(160, 160, 160, 0.5)",
-    cursor: `url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/meh.png"), auto`,
+    borderRadius: "30% 10% 10% 30%",
+    marginLeft: "50px",
+    backgroundColor: "#cd853f",
   };
+
+const initialHole = {
+  height: "25px",
+  width: "25px",
+  backgroundColor: "black",
+  borderRadius: "50%",
+  display: "inline-block",
+  marginTop: "37px",
+  marginLeft: "50px",
+  border: "none"
+};
+
+
+const hole = {
+    height: "25px",
+    width: "25px",
+    backgroundColor: "black",
+    borderRadius: "50%",
+    marginTop: "37px",
+    marginLeft: "200px",
+    border: "none"
+};
+
+const blowAir = {
+    height: "100px",
+    width: "100px",
+    backgroundColor: "green",
+    borderRadius: "30%",
+    marginLeft: "80px",
+    marginTop: "30px",
+    border: "none"
+};
 
 function Flute(): JSX.Element {
 
@@ -16,7 +48,19 @@ function Flute(): JSX.Element {
     }
     return(
         <div>
-            <div style={flute}></div>
+            <div style={flute}>
+                <div style={initialHole}></div>
+                <button style={hole}></button>
+                <button style={initialHole}></button>
+                <button style={initialHole}></button>
+                <button style={initialHole}></button>
+                <button style={initialHole}></button>
+                <button style={initialHole}></button>
+                <button style={initialHole}></button>
+                <button style={initialHole}></button>
+                <button style={initialHole}></button>
+            </div>
+            <button style={blowAir}>Blow Air</button>
         </div>
     );
 }
