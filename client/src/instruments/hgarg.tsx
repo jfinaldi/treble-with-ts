@@ -44,23 +44,28 @@ const blowAir = {
 function Flute(): JSX.Element {
 
     const soundsOn = async (soundType: number) => {
-
+        let url = "http://localhost:5005/flute/?flute_sound=" + soundType;
+        let data = await fetch(url);
+        let resJson = await data.json();
+        let audioSrc = "data:audo/wav;base64," + resJson.fileContent;
+        let beat = new Tone.Player(audioSrc).toDestination();
+        beat.autostart = true;
     }
     return(
         <div>
             <div style={flute}>
-                <div style={initialHole}></div>
-                <button style={hole}></button>
-                <button style={initialHole}></button>
-                <button style={initialHole}></button>
-                <button style={initialHole}></button>
-                <button style={initialHole}></button>
-                <button style={initialHole}></button>
-                <button style={initialHole}></button>
-                <button style={initialHole}></button>
-                <button style={initialHole}></button>
+                <div style={initialHole} onClick={() => soundsOn(1)}></div>
+                <button style={hole} onClick={() => soundsOn(2)}></button>
+                <button style={initialHole} onClick={() => soundsOn(3)}></button>
+                <button style={initialHole} onClick={() => soundsOn(4)}></button>
+                <button style={initialHole} onClick={() => soundsOn(5)}></button>
+                <button style={initialHole} onClick={() => soundsOn(6)}></button>
+                <button style={initialHole} onClick={() => soundsOn(7)}></button>
+                <button style={initialHole} onClick={() => soundsOn(8)}></button>
+                <button style={initialHole} onClick={() => soundsOn(9)}></button>
+                <button style={initialHole} onClick={() => soundsOn(10)}></button>
             </div>
-            <button style={blowAir}>Blow Air</button>
+            {/* <button style={blowAir}>Blow Air</button> */}
         </div>
     );
 }
