@@ -3,6 +3,7 @@ import { List, Map } from 'immutable';
 
 // project dependencies
 import { PianoInstrument } from './instruments/Piano';
+import { _Flute } from "./instruments/hgarg";
 import { WaveformVisualizer } from './visualizers/Waveform';
 
 /** ------------------------------------------------------------------------ **
@@ -17,7 +18,7 @@ import { WaveformVisualizer } from './visualizers/Waveform';
  */
 export type AppState = Map<string, any>;
 
-const instruments = List([PianoInstrument]);
+const instruments = List([PianoInstrument, _Flute]);
 const visualizers = List([WaveformVisualizer]);
 export const defaultState: AppState = Map<string, any>({
   instruments,
