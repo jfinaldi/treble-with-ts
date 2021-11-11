@@ -2,10 +2,8 @@ import * as Tone from "tone";
 import { Instrument } from "../Instruments";
 import { List, Range } from 'immutable';
 import classNames from 'classnames';
-import React from 'react';
 import BK from '../img/blackKey_a.svg';
 import WK from '../img/whiteKey_a.png';
-import { fileURLToPath } from "url";
 
 interface CatKeyProps {
   note: string; // C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
@@ -144,13 +142,13 @@ function CatPiano(): JSX.Element {
         )}
       </div>
       <div className={classNames('avenir', 'fw8', 'b', 'f1','dib', 'ml4-ns', 'pl5')}>
-        Cat Piano
+        DJ CatPaw
       </div>
     </div>
   );
 }
 
-export const _Cat = new Instrument("Cat Piano", CatPiano);
+export const _Cat = new Instrument("DJ CatPaw", CatPiano);
 
 
 
