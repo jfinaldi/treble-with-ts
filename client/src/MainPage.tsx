@@ -78,6 +78,7 @@ function ShowWelcome(): JSX.Element {
     >
       <div className="mw6 lh-copy mb4">
         <Music32 />
+        <div className="f3 fw7 mb2">Team Treble with TS</div>
         <div className="f3 fw7 mb2">Welcome to the case study.</div>
         <div className="f4 mb3">
           Select an instrument and a visualizer on the left to serve some fresh
@@ -100,7 +101,7 @@ export function MainPage({ state, dispatch }: PanelProps): JSX.Element {
 
   const location = useLocation();
   const isWelcome = !state.get('instrument');
-  console.log('INSTRUMENT', isWelcome);
+  console.log('INSTRUMENT', state.toIndexedSeq().toArray());
 
   useEffect(() => {
     dispatch(new DispatchAction('SET_LOCATION', { location }));
