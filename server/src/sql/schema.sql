@@ -18,3 +18,9 @@ VALUES (1, 'Ode to Joy (Dubstep Remix)', 'E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 E4
 
 INSERT INTO songs (id, song_title, notes, instrument) 
 VALUES (2, 'Test Track', '4,5,6,7,8','drum');
+
+INSERT INTO songs (id, song_title, notes, instrument) 
+VALUES (3, 'Mary Had A Little Lamb',
+	 '0.950,0.830,0.750,0.830,0.950,0.950,0.950,0.830,0.830,0.830,0.950,1.150,1.150,0.950,0.830,0.750,
+	  0.830,0.950,0.950,0.950,0.830,0.830,0.950,0.830,0.750',
+	 'cat');

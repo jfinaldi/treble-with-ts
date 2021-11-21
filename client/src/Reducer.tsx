@@ -57,6 +57,22 @@ export function appReducer(state: AppState, action: DispatchAction): AppState {
     let beat = new Tone.Player(audioSrc).toDestination();
     beat.autostart = true;
   };
+  const cat_meow = async (noteb: number, time_delay: number) => {
+    await sleep(time_delay);
+    try {
+      fetch("http://localhost:5005/three")
+        .then((response) => response.json())
+        .then((rsp) => {
+          let audioSrc = "data:audio/mp3;base64," + rsp.fileContent;
+          let player = new Tone.Player(audioSrc).toDestination();
+          player.playbackRate = noteb; // the playback rate speed changes the pitch
+          player.autostart = true;
+        });
+    } catch (e) {
+      console.log("fetch error for note");
+      throw(e);
+    }
+  };
   function timeout(delay: number) {
     return new Promise((res) => setTimeout(res, delay));
   }
@@ -95,7 +111,17 @@ export function appReducer(state: AppState, action: DispatchAction): AppState {
             _i += 500;
           }
           return state.set("notes", "");
-        } else {
+        }
+        if (instrument_type === "cat") {
+          var cat_notes: string[] = notes.split(",");
+          var _i: number = 650;
+          for (let i of cat_notes) {
+            cat_meow(parseFloat(i), _i);
+            _i += 650;
+          }
+          return state.set("notes", "");
+        } 
+        else {
           return state.set("notes", notes);
         }
       }
