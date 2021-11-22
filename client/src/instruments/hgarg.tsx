@@ -80,11 +80,11 @@ function XyloPhone(): JSX.Element {
     return(
         <div style={xylophone}>
             <div style={{
-                width: "586px",
-                height: "20px",
+                width: "585px",
+                height: "21px",
                 backgroundColor: "#663300",
                 marginTop: "100px",
-                position: "absolute",
+                marginBottom: "-110px",
                 zIndex: 1
             }} />
             <div>
