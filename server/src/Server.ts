@@ -95,6 +95,18 @@ app.get("/flute", (req: any, res: any) => {
     res.json(returnData);
   });
 });
+app.get("/xylophone", (req: any, res: any) => {
+  const fs = require("fs");
+  const path = require("path");
+  const beat_sound = `${req.query.xylophone_sound}.mp3`;
+  const returnData: any = {};
+  const filePath: string = path.join(__dirname, "../") + "sounds/xylophone/" + beat_sound;
+  fs.readFile(filePath, function (err: any, file: any) {
+    var base64File = Buffer.from(file, "binary").toString("base64");
+    returnData.fileContent = base64File;
+    res.json(returnData);
+  });
+});
 
 app.listen(port, (err: any) => {
   if (err) return console.log("ERROR", err);
