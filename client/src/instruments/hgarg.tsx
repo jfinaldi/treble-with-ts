@@ -1,50 +1,76 @@
+import { NonCertified16 } from "@carbon/icons-react";
 import * as Tone from "tone";
 import { Instrument } from "../Instruments";
 
-const flute = {
-    width: "980px",
-    height: "100px",
-    borderRadius: "30% 10% 10% 30%",
-    marginLeft: "50px",
-    backgroundColor: "#cd853f",
-  };
 
-const initialHole = {
-  height: "25px",
-  width: "25px",
-  backgroundColor: "black",
-  borderRadius: "50%",
-  display: "inline-block",
-  marginTop: "37px",
-  marginLeft: "50px",
-  border: "none"
-};
+const buttonStyle = {
+    padding: "10px",
+    width: "60px",
+    fontSize: "24px",
+    border: "none",
+    color: "white",
+    borderRadius: "5px",
+    marginRight: "15px",
+    cursor : "pointer"
+}
 
+const h1 = {
+    height: "200px",
+    backgroundColor: "#660033",
+}
 
-const hole = {
-    height: "25px",
-    width: "25px",
-    backgroundColor: "black",
-    borderRadius: "50%",
-    marginTop: "37px",
-    marginLeft: "200px",
-    border: "none"
-};
+const h2 = {
+    height: "185px",
+    backgroundColor: "#00CCCC",
+}
 
-const blowAir = {
-    height: "100px",
-    width: "100px",
-    backgroundColor: "green",
-    borderRadius: "30%",
-    marginLeft: "80px",
-    marginTop: "30px",
-    border: "none"
-};
+const h3 = {
+    height: "170px",
+    backgroundColor: "#006666",
+}
 
-function Flute(): JSX.Element {
+const h4 = {
+    height: "155px",
+    backgroundColor: "#666600",
+}
+
+const h5 = {
+    height: "140px",
+    backgroundColor: "#B2FF66",
+}
+
+const h6 = {
+    height: "125px",
+    backgroundColor: "#003366",
+}
+
+const h7 = {
+    height: "110px",
+    backgroundColor: "#FF8000",
+}
+
+const h8 = {
+    height: "95px",
+    backgroundColor: "#FF0000",
+}
+
+const xylophone = {
+    width: "600px",
+    marginLeft: "250px",
+    marginUp: "100px"
+}
+
+const connector = {
+    width: "600px",
+    height: "20px",
+    backgroundColor: "#663300",
+    marginTop: "100px"
+}
+
+function XyloPhone(): JSX.Element {
 
     const soundsOn = async (soundType: number) => {
-        let url = "http://localhost:5005/flute/?flute_sound=" + soundType;
+        let url = "http://localhost:5005/xylophone/?xylophone_sound=" + soundType;
         let data = await fetch(url);
         let resJson = await data.json();
         let audioSrc = "data:audo/wav;base64," + resJson.fileContent;
@@ -52,22 +78,27 @@ function Flute(): JSX.Element {
         beat.autostart = true;
     }
     return(
-        <div>
-            <div style={flute}>
-                <div style={initialHole} onClick={() => soundsOn(1)}></div>
-                <button style={hole} onClick={() => soundsOn(2)}></button>
-                <button style={initialHole} onClick={() => soundsOn(3)}></button>
-                <button style={initialHole} onClick={() => soundsOn(4)}></button>
-                <button style={initialHole} onClick={() => soundsOn(5)}></button>
-                <button style={initialHole} onClick={() => soundsOn(6)}></button>
-                <button style={initialHole} onClick={() => soundsOn(7)}></button>
-                <button style={initialHole} onClick={() => soundsOn(8)}></button>
-                <button style={initialHole} onClick={() => soundsOn(9)}></button>
-                <button style={initialHole} onClick={() => soundsOn(10)}></button>
+        <div style={xylophone}>
+            <div style={{
+                width: "586px",
+                height: "20px",
+                backgroundColor: "#663300",
+                marginTop: "100px",
+                position: "absolute",
+                zIndex: 1
+            }} />
+            <div>
+                <button style={{...buttonStyle, ...h1, zIndex: 100}} onClick={() => soundsOn(1)}>c</button>
+                <button style={{...buttonStyle, ...h2}} onClick={() => soundsOn(2)}>d1</button>
+                <button style={{...buttonStyle, ...h3}} onClick={() => soundsOn(3)}>e1</button>
+                <button style={{...buttonStyle, ...h4}} onClick={() => soundsOn(4)}>f</button>
+                <button style={{...buttonStyle, ...h5}} onClick={() => soundsOn(5)}>g</button>
+                <button style={{...buttonStyle, ...h6}} onClick={() => soundsOn(6)}>a</button>
+                <button style={{...buttonStyle, ...h7}} onClick={() => soundsOn(7)}>b</button>
+                <button style={{...buttonStyle, ...h8}} onClick={() => soundsOn(8)}>c2</button>
             </div>
-            {/* <button style={blowAir}>Blow Air</button> */}
         </div>
     );
 }
 
-export const _Flute = new Instrument("Flute", Flute);
+export const _Xylophone = new Instrument("Xylophone", XyloPhone);

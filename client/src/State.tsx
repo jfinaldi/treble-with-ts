@@ -6,7 +6,7 @@ import { PianoInstrument } from "./instruments/Piano";
 import { _Drums } from "./instruments/asingh";
 import { WaveformVisualizer } from "./visualizers/Waveform";
 import { _Cat } from "./instruments/jfinaldi";
-import { _Flute } from "./instruments/hgarg";
+import { _Xylophone } from "./instruments/hgarg";
 
 
 /** ------------------------------------------------------------------------ **
@@ -20,7 +20,7 @@ import { _Flute } from "./instruments/hgarg";
  * 'visualizer': Visualizer
  */
 export type AppState = Map<string, any>;
-const instruments = List([PianoInstrument, _Drums, _Cat, _Flute]);
+const instruments = List([PianoInstrument, _Drums, _Cat, _Xylophone]);
 
 const visualizers = List([WaveformVisualizer]);
 export const defaultState: AppState = Map<string, any>({

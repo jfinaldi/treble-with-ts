@@ -32,12 +32,12 @@ app.get("/three", (req, res) => {
   });
 });
 
-app.get("/flute", (req, res) => {
+app.get("/xylophone", (req, res) => {
   const fs = require("fs");
   const path = require("path");
-  const flute_sound = `${req.query.flute_sound}.mp3`;
+  const xylophone_sound = `${req.query.xylophone_sound}.mp3`;
   const returnData = {};
-  const filePath = path.join(__dirname + "/sounds/flute", flute_sound);
+  const filePath = path.join(__dirname + "/sounds/xylophone", xylophone_sound);
   fs.readFile(filePath, function (err, file) {
     var base64File = Buffer.from(file, "binary").toString("base64");
     returnData.fileContent = base64File;
