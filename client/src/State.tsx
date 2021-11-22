@@ -12,6 +12,7 @@ import { _Drums } from "./instruments/asingh";
 import { HarpInstrument } from "./instruments/xo28122000";
 
 import { _Xylophone } from "./instruments/hgarg";
+import { FancyVisualizer } from "./visualizers/xo28122000";
 /** ------------------------------------------------------------------------ **
  * The entire application state is stored in AppState.
  ** ------------------------------------------------------------------------ */
@@ -24,7 +25,7 @@ import { _Xylophone } from "./instruments/hgarg";
  */
 export type AppState = Map<string, any>;
 const instruments = List([PianoInstrument, HarpInstrument, _Drums, _Cat, _Xylophone]);
-const visualizers = List([WaveformVisualizer, RippleVisualizer, CatVisualizer, RockVisualizer]);
+const visualizers = List([WaveformVisualizer, RippleVisualizer, CatVisualizer, RockVisualizer, FancyVisualizer]);
 export const defaultState: AppState = Map<string, any>({
   instruments,
   visualizers,
