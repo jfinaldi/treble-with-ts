@@ -89,7 +89,7 @@ function CatPiano(): JSX.Element {
     { noteb: 0.830, note: 'D', idx: 1 },       // x
     { noteb: 0.885, note: 'Eb', idx: 1.5 },    // x
     { noteb: 0.950, note: 'E', idx: 2 },       // x
-    { noteb: 1.050, note: 'F', idx: 3 },       // x
+    { noteb: 1.030, note: 'F', idx: 3 },       // x
     { noteb: 1.089, note: 'Gb', idx: 3.5 },    // x
     { noteb: 1.150, note: 'G', idx: 4 },       // x
     { noteb: 1.185, note: 'Ab', idx: 4.5 },    // x (double check)
