@@ -2,7 +2,7 @@ import { Server, Socket } from "socket.io";
 import { DB } from "./Database";
 import http from "http";
 import { MessageHandler } from "./MessageHandler";
-import { GetSongsHandler } from "./handlers/GetSongsHandler";
+import { GetSongsHandler } from "./handlers/GetAllSongsHandler";
 
 const PORT = 3001;
 const VALID_ORIGINS = ["http://localhost:3000"];
