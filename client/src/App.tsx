@@ -22,7 +22,9 @@ function App() {
     initializeSocket(
       async (socket) => {
         dispatch(new DispatchAction("SET_SOCKET", { socket }));
-        const { songs } = await send(socket, "get_songs", {});
+        const { songs } = await send(socket, "get_all_songs", {});
+        console.log("songs fetched: ", songs);
+        // test websockets here
         dispatch(new DispatchAction("SET_SONGS", { songs }));
       },
       () => {
