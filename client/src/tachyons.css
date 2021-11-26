@@ -2878,6 +2878,8 @@
 	.f5-m { font-size: 1rem; }
 	.f6-m { font-size: .875rem; }
 	.f7-m { font-size: .75rem; }
+	.f8-m { font-size: .50rem; }
+	.f9-m { font-size: .25rem; }
 	.measure-m { max-width: 30em; }
 	.measure-wide-m { max-width: 34em; }
 	.measure-narrow-m { max-width: 20em; }

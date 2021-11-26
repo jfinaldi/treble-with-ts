@@ -128,21 +128,35 @@ function Player({ state, dispatch}: SideNavProps): JSX.Element {
       <div className={classNames('ba bsblk bg-moon-gray pl3 pr3 pb3 pt1 dib-ns')}>
         <div>
 	        <form action="http://www.google.com">
-    	      <input className={classNames('br2-m f4-m tc-l w-75')} 
+    	      <input className={classNames('br2-m tc-l w-75')} 
                    id="text" type="text" name="song_title" 
-                   placeholder="Search Song by Title"/>
+                   placeholder="Search by Title"/>
             <input className={classNames('txt_shdw_blk ml1 bg-light-green dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--diarreen br3 white w-20 f4 tc-ns')}
                    id="go" type="button" value="Go"></input>
           </form>    
         </div>
         <div className={classNames('tc-ns f4-ns b-m pt2 pb2 pl2-m pr2-m black')} 
              id="song_title">"Ode to Joy"</div>
-        <input className={classNames('b-m green bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+        <input className={classNames('mr1-ns b-m green bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
              id="play" type="button" value="Play"></input>
-        <input className={classNames('b-m black bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+        <input className={classNames('mr1-ns b-m black bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
              id="pause" type="button" value="Pause"></input>
         <input className={classNames('b-m red bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
              id="stop" type="button" value="Stop"></input>
+
+        <input className={classNames('ml1-ns mt1-ns mr1-ns br3')}
+             id="record" type="button" value="Record"></input>
+        <input className={classNames('mt1-ns br3')}
+             id="reset" type="button" value="Reset Song"></input>
+        <div>
+	        <form action="http://www.google.com">
+    	      <input className={classNames('ml1-ns br2-m f4-m tc-l w-90 mt1-ns')} 
+                   id="text" type="text" name="new_song_title" 
+                   placeholder="Name Your Song"/>
+            <input className={classNames('ml1-ns txt_shdw_blk bg-light-blue dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--diarreen br3 white w-90-ns f7 tc-ns mt1-ns')}
+                   id="submit" type="button" value="submit"></input>
+          </form> 
+        </div>
       </div>
     </Section>
   );
@@ -157,8 +171,8 @@ export function SideNav({ state, dispatch }: SideNavProps): JSX.Element {
       <div className="flex-auto">
         <Instruments state={state} dispatch={dispatch} />
         <Visualizers state={state} dispatch={dispatch} />
-        <Songs state={state} dispatch={dispatch} />
         <Player state={state} dispatch={dispatch} />
+        <Songs state={state} dispatch={dispatch} />
       </div>
     </div>
   );
