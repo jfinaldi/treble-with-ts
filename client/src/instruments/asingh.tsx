@@ -1,52 +1,10 @@
 import * as Tone from "tone";
 import { Instrument } from "../Instruments";
-const random_color = () => "#" + Math.floor(Math.random() * 16777215).toString(16);
-const btnGroup = {
-  width: "100%",
-  display: "grid",
-  gridTemplateColumns: "1fr 0.75fr 1fr",
-  gridColumnGap: "20px",
-  gridRowGap: "20px",
-  justifyItems: "stretch",
-  alignItems: "inital",
-};
-const sphere = {
-  display: "block",
-  borderRadius: "100%",
-  height: "200px",
-  width: "200px",
-  margin: "0",
-  background: "radial-gradient(circle at 100px 100px, #FFB6C1, #000)",
-};
-const btnStyle = {
-  padding: "20px 24px",
-  height: "100px",
-  width: "150px",
-  borderRadius: "150px 150px 0 0",
-  cursor: `url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/meh.png"), auto`,
-};
-const cymbal = {
-  backgroundColor: "#f0e130",
-  width: "200px",
-  height: "100px",
-  borderRadius: "100%",
-  borderBottomLeftRadius: "0",
-  cursor: `url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/meh.png"), auto`,
-};
-const drum_cylindar = {
-  width: "100px",
-  height: "100px",
-  borderRadius: "50px/25px",
-  backgroundColor: "rgba(160, 160, 160, 0.5)",
-  cursor: `url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/meh.png"), auto`,
-};
-const drum_cylindar_v2 = {
-  width: "500px",
-  height: "100px",
-  borderRadius: "50px/25px",
-  backgroundColor: "rgba(160, 160, 160, 0.5)",
-  cursor: `url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/meh.png"), auto`,
-};
+import Bass from "../img/drums/bass.svg";
+import Top_Left from "../img/drums/pip_stand.svg";
+import Mini_Boom from "../img/drums/hmm.svg";
+import smn from "../img/drums/smn_.svg";
+import "./drums.css";
 function Drums(): JSX.Element {
   const drum_boom = async (type_beat: number) => {
     let rsp_url = "http://localhost:5005/drums/?type_beat=" + type_beat;
@@ -57,34 +15,16 @@ function Drums(): JSX.Element {
     beat.autostart = true;
   };
   return (
-    <div className="test" style={btnGroup}>
-      <button style={cymbal} onClick={() => drum_boom(4)}>
-        Tsk!
-      </button>
-      <button style={btnStyle} onClick={() => drum_boom(5)}>
-        Pow!
-      </button>
-      <button style={cymbal} onClick={() => drum_boom(6)}>
-        Wow!
-      </button>
-      <button style={btnStyle} onClick={() => drum_boom(7)}>
-        Boom!
-      </button>
-      <button style={drum_cylindar_v2} onClick={() => drum_boom(8)}>
-        Pop!
-      </button>
-      <button style={sphere} onClick={() => drum_boom(9)}>
-        Crackle!
-      </button>
-      <button style={btnStyle} onClick={() => drum_boom(10)}>
-        Ow!
-      </button>
-      <button style={drum_cylindar} onClick={() => drum_boom(11)}>
-        Oo!
-      </button>
-      <button style={drum_cylindar} onClick={() => drum_boom(12)}>
-        Bo!
-      </button>
+    <div className="drum_container">
+      <img src={Top_Left} alt="a" style={{ height: 200, width: 150, transform: "rotate(20deg)" }} onClick={() => drum_boom(4)} />
+      <img src={Mini_Boom} alt="b" style={{ height: 150, width: 150, transform: "rotate(0)" }} onClick={() => drum_boom(5)} />
+      <img src={Top_Left} alt="c" style={{ height: 150, width: 150, transform: "rotate(-20deg)" }} onClick={() => drum_boom(6)} />
+      <img src={Mini_Boom} alt="d" style={{ height: 120, width: 120, transform: "rotate(20deg)" }} onClick={() => drum_boom(7)} />
+      <img src={smn} alt="e" style={{ height: 150, width: 150, transform: "rotate(0deg)" }} onClick={() => drum_boom(8)} />
+      <img src={Mini_Boom} alt="f" style={{ height: 120, width: 120, transform: "rotate(-20deg)" }} onClick={() => drum_boom(9)} />
+      <img src={smn} alt="g" style={{ height: 150, width: 150, transform: "rotate(0deg)" }} onClick={() => drum_boom(10)} />
+      <img src={Bass} alt="k" style={{ height: 150, width: 150 }} onClick={() => drum_boom(11)} />
+      <img src={smn} alt="m" style={{ height: 150, width: 150, transform: "rotate(0deg)" }} onClick={() => drum_boom(12)} />
     </div>
   );
 }
