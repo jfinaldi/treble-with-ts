@@ -186,7 +186,7 @@ function Player({ state }: SideNavProps): JSX.Element {
                    name="new_song_title" 
                    placeholder="Name Your Song"
             />
-            <input className={classNames('ml1-ns txt_shdw_blk bg-light-blue dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--diarreen br3 white w-90-ns f7 tc-ns mt1-ns')}
+            <input className={classNames('ml1-ns txt_shdw_blk bg-light-blue dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--blue br3 white w-90-ns f5 tc-ns mt1-ns')}
                    id="submit" 
                    type="button" 
                    value="submit"

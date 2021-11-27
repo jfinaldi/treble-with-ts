@@ -515,6 +515,7 @@
  .shadow-4 { box-shadow: 2px 2px 8px 0 rgba( 0, 0, 0, .2 ); }
  .shadow-5 { box-shadow: 4px 4px 8px 0 rgba( 0, 0, 0, .2 ); }
  .shadow-6 { box-shadow: 4px 4px 10px 0 rgba( 0, 0, 0, .2 ); }
+ .shadow-7 { border-width:5px;  border-bottom-style:double; }
  /*
  
 		CODE
@@ -3325,7 +3326,7 @@
 
 
 	.bsblk { border: solid-black; }
-	.txt_shdw_blk { text-shadow: 1px 1px #070606; }
+	.txt_shdw_blk { text-shadow: 1px 1px 1px #070606; }
  }
  
  
