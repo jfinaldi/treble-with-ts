@@ -1,12 +1,18 @@
 import * as Tone from "tone";
-import { Instrument } from "../Instruments";
 import Bass from "../img/drums/bass.svg";
 import Top_Left from "../img/drums/pip_stand.svg";
 import Mini_Boom from "../img/drums/hmm.svg";
 import smn from "../img/drums/smn_.svg";
+import { useState } from "react";
+import { Instrument } from "../Instruments";
 import "./drums.css";
 function Drums(): JSX.Element {
+  const [record, setRecord] = useState(false);
+  const [track, setTrack] = useState([] as any[]);
+  const clear = () => setTrack([]);
+  const save = () => console.log(track); //TODO: POST Request to Backend
   const drum_boom = async (type_beat: number) => {
+    if (record) setTrack([...track, type_beat]);
     let rsp_url = "http://localhost:5005/drums/?type_beat=" + type_beat;
     let rsp_data = await fetch(rsp_url);
     let rsp_json = await rsp_data.json();
@@ -15,16 +21,24 @@ function Drums(): JSX.Element {
     beat.autostart = true;
   };
   return (
-    <div className="drum_container">
-      <img src={Top_Left} alt="a" style={{ height: 200, width: 150, transform: "rotate(20deg)" }} onClick={() => drum_boom(4)} />
-      <img src={Mini_Boom} alt="b" style={{ height: 150, width: 150, transform: "rotate(0)" }} onClick={() => drum_boom(5)} />
-      <img src={Top_Left} alt="c" style={{ height: 150, width: 150, transform: "rotate(-20deg)" }} onClick={() => drum_boom(6)} />
-      <img src={Mini_Boom} alt="d" style={{ height: 120, width: 120, transform: "rotate(20deg)" }} onClick={() => drum_boom(7)} />
-      <img src={smn} alt="e" style={{ height: 150, width: 150, transform: "rotate(0deg)" }} onClick={() => drum_boom(8)} />
-      <img src={Mini_Boom} alt="f" style={{ height: 120, width: 120, transform: "rotate(-20deg)" }} onClick={() => drum_boom(9)} />
-      <img src={smn} alt="g" style={{ height: 150, width: 150, transform: "rotate(0deg)" }} onClick={() => drum_boom(10)} />
-      <img src={Bass} alt="k" style={{ height: 150, width: 150 }} onClick={() => drum_boom(11)} />
-      <img src={smn} alt="m" style={{ height: 150, width: 150, transform: "rotate(0deg)" }} onClick={() => drum_boom(12)} />
+    <div>
+      {/** RECORD Component INSERT HERE */}
+      <button onClick={() => setRecord(true)}>Record</button>
+      <button onClick={() => setRecord(false)}>Stop Record</button>
+      <button onClick={() => clear()}>Clear</button>
+      <button onClick={() => save()}>Save</button>
+      {/** RECORD Component INSERT HERE */}
+      <div className="drum_container">
+        <img src={Top_Left} alt="a" style={{ height: 200, width: 150, transform: "rotate(20deg)" }} onClick={() => drum_boom(4)} />
+        <img src={Mini_Boom} alt="b" style={{ height: 150, width: 150, transform: "rotate(0)" }} onClick={() => drum_boom(5)} />
+        <img src={Top_Left} alt="c" style={{ height: 150, width: 150, transform: "rotate(-20deg)" }} onClick={() => drum_boom(6)} />
+        <img src={Mini_Boom} alt="d" style={{ height: 120, width: 120, transform: "rotate(20deg)" }} onClick={() => drum_boom(7)} />
+        <img src={smn} alt="e" style={{ height: 150, width: 150, transform: "rotate(0deg)" }} onClick={() => drum_boom(8)} />
+        <img src={Mini_Boom} alt="f" style={{ height: 120, width: 120, transform: "rotate(-20deg)" }} onClick={() => drum_boom(9)} />
+        <img src={smn} alt="g" style={{ height: 150, width: 150, transform: "rotate(0deg)" }} onClick={() => drum_boom(10)} />
+        <img src={Bass} alt="k" style={{ height: 150, width: 150 }} onClick={() => drum_boom(11)} />
+        <img src={smn} alt="m" style={{ height: 150, width: 150, transform: "rotate(0deg)" }} onClick={() => drum_boom(12)} />
+      </div>
     </div>
   );
 }

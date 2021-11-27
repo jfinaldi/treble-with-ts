@@ -4,7 +4,6 @@ import classNames from "classnames";
 import { List, set } from "immutable";
 import { useLocation, Link } from "react-router-dom";
 import { RadioButton20, RadioButtonChecked20, Music20 } from "@carbon/icons-react";
-import DropdownList from "react-widgets/DropdownList";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 
@@ -13,6 +12,7 @@ import { DispatchAction } from "./Reducer";
 import { AppState } from "./State";
 import { Instrument } from "./Instruments";
 import { Visualizer } from "./Visualizers";
+import { Play } from "./Play";
 
 /** ------------------------------------------------------------------------ **
  * All the components in the side navigation.
@@ -106,92 +106,57 @@ function Songs({ state, dispatch }: SideNavProps): JSX.Element {
 }
 
 function Player({ state }: SideNavProps): JSX.Element {
-  const [mounted, setMounted] = useState(["Empty"]);
+  const [songs, setSongs] = useState(["Empty"]);
   const [selected, setSelected] = useState("");
   useEffect(() => {
-    setMounted(state.get("songs", List()).reduce((acc: any, song: any) => acc.concat([song.get("songTitle")]), [] as any[]));
+    setSongs(state.get("songs", List()).reduce((acc: any, song: any) => acc.concat([song.get("songTitle")]), [] as any[]));
   }, [state]);
   return (
     <Section title="Jukebox">
-      {/* <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl3 pr3 pb3 pt1 dib-ns")}> */}
-      <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl0 pr0 pb3 pt1 dib-ns")}>
-        <Combobox
-          hideCaret
-          hideEmptyPopup
-          placeholder='Search Song by Title'
-          data={mounted}
-          value={selected} 
-          onChange={(nextValue) => setSelected(nextValue)} 
-        />
+      <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl3 pr3 pb3 pt1 dib-ns")}>
+        <Combobox hideCaret hideEmptyPopup placeholder="Search Song by Title" data={songs} value={selected} onChange={(nextValue) => setSelected(nextValue)} />
         <div className={classNames("tc-ns f8-ns b-m pt2 pb2 pl2-m pr2-m black")} id="song_title">
           {selected}
         </div>
-        {/* <input
-          className={classNames("b-m green bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
-          id="play"
-          type="button"
-          value="Play"
-        ></input>
-        <input
-          className={classNames("b-m black bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
-          id="pause"
-          type="button"
-          value="Pause"
-        ></input>
-        <input
-          className={classNames("b-m red bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
-          id="stop"
-          type="button"
-          value="Stop"
-        ></input> */}
-        {/* <div className={classNames('ml4-ns')}> */}
-        <div className={classNames('ml3-ns pl1')}>
-        <input className={classNames('mr1-ns b-m green bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
-             id="play" 
-             type="button" 
-             value="Play"
-        ></input>
-        <input className={classNames('mr1-ns b-m black bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
-             id="pause" 
-             type="button" 
-             value="Pause"
-        ></input>
-        <input className={classNames('b-m red bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
-             id="stop" 
-             type="button" 
-             value="Stop"
-        ></input>
-        </div>
-
-        {/* <div className={classNames('ml4-ns')}> */}
-        <div className={classNames('ml2-ns pl2')}>
-          <input className={classNames('ml1-ns mt1-ns mr1-ns br3')}
-             id="record" 
-             type="button" 
-             value="Record"
+        <div className={classNames("ml4-ns")}>
+          <input
+            className={classNames("mr1-ns b-m green bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
+            id="play"
+            type="button"
+            value="Play"
+            onClick={() => Play(state, selected, "play", true)}
           ></input>
-          <input className={classNames('mt1-ns br3')}
-             id="reset" 
-             type="button" 
-             value="Reset Song"
+          <input
+            className={classNames("mr1-ns b-m black bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
+            id="pause"
+            type="button"
+            value="Pause"
+            onClick={() => Play(state, selected, "pause")}
+          ></input>
+          <input
+            className={classNames("b-m red bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
+            id="stop"
+            type="button"
+            value="Stop"
+            onClick={() => Play(state, selected, "stop")}
           ></input>
         </div>
 
-        {/* <div className={classNames('ml2-ns')}> */}
-        <div className={classNames('ml0-ns pl2')}>
-	        <form action="http://www.google.com">
-    	      <input className={classNames('ml1-ns br2-m f4-m tc-l w-90 mt1-ns')} 
-                   id="text" 
-                   type="text" 
-                   name="new_song_title" 
-                   placeholder="Name Your Song"
-            />
-            <input className={classNames('ml1-ns txt_shdw_blk bg-light-blue dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--blue br3 white w-90-ns f5 tc-ns mt1-ns')}
-                   id="submit" 
-                   type="button" 
-                   value="submit"
+        <div className={classNames("ml4-ns")}>
+          <input className={classNames("ml1-ns mt1-ns mr1-ns br3")} id="record" type="button" value="Record"></input>
+          <input className={classNames("mt1-ns br3")} id="reset" type="button" value="Reset Song"></input>
+        </div>
+
+        <div className={classNames("ml2-ns")}>
+          <form action="http://www.google.com">
+            <input className={classNames("ml1-ns br2-m f4-m tc-l w-90 mt1-ns")} id="text" type="text" name="new_song_title" placeholder="Name Your Song" />
+            <input
+              className={classNames("ml1-ns txt_shdw_blk bg-light-blue dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--diarreen br3 white w-90-ns f7 tc-ns mt1-ns")}
+              id="submit"
+              type="button"
+              value="submit"
             ></input>
-          </form> 
+          </form>
         </div>
       </div>
     </Section>

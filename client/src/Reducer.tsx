@@ -5,9 +5,7 @@ import { List, Map, fromJS } from "immutable";
 import { Instrument } from "./Instruments";
 import { Visualizer } from "./Visualizers";
 import { AppState } from "./State";
-
-//going to try to remove later
-import * as Tone from "tone";
+import { Play } from "./Play";
 
 /** ------------------------------------------------------------------------ **
  * All user input is handled by DispatchAction.
@@ -44,39 +42,6 @@ export class DispatchAction {
 
 export function appReducer(state: AppState, action: DispatchAction): AppState {
   const { type, args } = action;
-
-  const sleep = (milliseconds: any) => {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-  };
-  const drum_boom = async (type_beat: number, time_delay: number) => {
-    await sleep(time_delay);
-    let rsp_url = "http://localhost:5005/drums/?type_beat=" + type_beat;
-    let rsp_data = await fetch(rsp_url);
-    let rsp_json = await rsp_data.json();
-    let audioSrc = "data:audo/wav;base64," + rsp_json.fileContent;
-    let beat = new Tone.Player(audioSrc).toDestination();
-    beat.autostart = true;
-  };
-  const cat_meow = async (noteb: number, time_delay: number) => {
-    await sleep(time_delay);
-    try {
-      fetch("http://localhost:5005/three")
-        .then((response) => response.json())
-        .then((rsp) => {
-          let audioSrc = "data:audio/mp3;base64," + rsp.fileContent;
-          let player = new Tone.Player(audioSrc).toDestination();
-          player.playbackRate = noteb; // the playback rate speed changes the pitch
-          player.autostart = true;
-        });
-    } catch (e) {
-      console.log("fetch error for note");
-      throw(e);
-    }
-  };
-  function timeout(delay: number) {
-    return new Promise((res) => setTimeout(res, delay));
-  }
-
   // Question: Does this function remind of you registering callbacks? // Answer - nah
   const newState = (() => {
     switch (type) {
@@ -95,35 +60,7 @@ export function appReducer(state: AppState, action: DispatchAction): AppState {
         return state.set("songs", songs);
       }
       case "PLAY_SONG": {
-        const notes = state
-          .get("songs")
-          .find((s: any) => s.get("id") === args.get("id"))
-          .get("notes");
-        const instrument_type = state
-          .get("songs")
-          .find((s: any) => s.get("id") === args.get("id"))
-          .get("instrument");
-        if (instrument_type === "drum") {
-          var drum_beats: string[] = notes.split(",");
-          var _i: number = 500;
-          for (let i of drum_beats) {
-            drum_boom(parseInt(i), _i);
-            _i += 500;
-          }
-          return state.set("notes", "");
-        }
-        if (instrument_type === "cat") {
-          var cat_notes: string[] = notes.split(",");
-          var _i: number = 650;
-          for (let i of cat_notes) {
-            cat_meow(parseFloat(i), _i);
-            _i += 650;
-          }
-          return state.set("notes", "");
-        } 
-        else {
-          return state.set("notes", notes);
-        }
+        return Play(state, args, "play");
       }
       case "STOP_SONG": {
         return state.delete("notes");
