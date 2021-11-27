@@ -113,7 +113,8 @@ function Player({ state }: SideNavProps): JSX.Element {
   }, [state]);
   return (
     <Section title="Jukebox">
-      <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl3 pr3 pb3 pt1 dib-ns")}>
+      {/* <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl3 pr3 pb3 pt1 dib-ns")}> */}
+      <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl0 pr0 pb3 pt1 dib-ns")}>
         <Combobox
           hideCaret
           hideEmptyPopup
@@ -143,7 +144,8 @@ function Player({ state }: SideNavProps): JSX.Element {
           type="button"
           value="Stop"
         ></input> */}
-        <div className={classNames('ml4-ns')}>
+        {/* <div className={classNames('ml4-ns')}> */}
+        <div className={classNames('ml3-ns pl1')}>
         <input className={classNames('mr1-ns b-m green bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
              id="play" 
              type="button" 
@@ -161,7 +163,8 @@ function Player({ state }: SideNavProps): JSX.Element {
         ></input>
         </div>
 
-        <div className={classNames('ml4-ns')}>
+        {/* <div className={classNames('ml4-ns')}> */}
+        <div className={classNames('ml2-ns pl2')}>
           <input className={classNames('ml1-ns mt1-ns mr1-ns br3')}
              id="record" 
              type="button" 
@@ -174,7 +177,8 @@ function Player({ state }: SideNavProps): JSX.Element {
           ></input>
         </div>
 
-        <div className={classNames('ml2-ns')}>
+        {/* <div className={classNames('ml2-ns')}> */}
+        <div className={classNames('ml0-ns pl2')}>
 	        <form action="http://www.google.com">
     	      <input className={classNames('ml1-ns br2-m f4-m tc-l w-90 mt1-ns')} 
                    id="text" 
@@ -196,7 +200,7 @@ function Player({ state }: SideNavProps): JSX.Element {
 
 export function SideNav({ state, dispatch }: SideNavProps): JSX.Element {
   return (
-    <div className="absolute top-0 left-0 bottom-0 w6 z-1 shadow-1 bg-white flex flex-column">
+    <div className="absolute top-0 left-0 bottom-0 w5 z-1 shadow-1 bg-white flex flex-column">
       <div className="h3 fw7 f5 flex items-center pl3 bb b--light-gray">Treble with TS</div>
       <div className="flex-auto">
         <Instruments state={state} dispatch={dispatch} />
