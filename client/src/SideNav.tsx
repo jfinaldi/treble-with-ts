@@ -5,6 +5,8 @@ import { List, set } from "immutable";
 import { useLocation, Link } from "react-router-dom";
 import { RadioButton20, RadioButtonChecked20, Music20 } from "@carbon/icons-react";
 import DropdownList from "react-widgets/DropdownList";
+import Combobox from "react-widgets/Combobox";
+import "react-widgets/styles.css";
 
 // project imports
 import { DispatchAction } from "./Reducer";
@@ -111,12 +113,19 @@ function Player({ state }: SideNavProps): JSX.Element {
   }, [state]);
   return (
     <Section title="Jukebox">
-      <DropdownList value={selected} onChange={(nextValue) => setSelected(nextValue)} data={mounted} />
-      <div className={classNames("ba bsblk bg-moon-gray pl3 pr3 pb3 pt1 dib-ns")}>
-        <div className={classNames("tc-ns f4-ns b-m pt2 pb2 pl2-m pr2-m black")} id="song_title">
-          Selected: {selected}
+      <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl3 pr3 pb3 pt1 dib-ns")}>
+        <Combobox
+          hideCaret
+          hideEmptyPopup
+          placeholder='Search Song by Title'
+          data={mounted}
+          value={selected} 
+          onChange={(nextValue) => setSelected(nextValue)} 
+        />
+        <div className={classNames("tc-ns f8-ns b-m pt2 pb2 pl2-m pr2-m black")} id="song_title">
+          {selected}
         </div>
-        <input
+        {/* <input
           className={classNames("b-m green bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
           id="play"
           type="button"
@@ -133,7 +142,53 @@ function Player({ state }: SideNavProps): JSX.Element {
           id="stop"
           type="button"
           value="Stop"
+        ></input> */}
+        <div className={classNames('ml4-ns')}>
+        <input className={classNames('mr1-ns b-m green bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+             id="play" 
+             type="button" 
+             value="Play"
         ></input>
+        <input className={classNames('mr1-ns b-m black bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+             id="pause" 
+             type="button" 
+             value="Pause"
+        ></input>
+        <input className={classNames('b-m red bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+             id="stop" 
+             type="button" 
+             value="Stop"
+        ></input>
+        </div>
+
+        <div className={classNames('ml4-ns')}>
+          <input className={classNames('ml1-ns mt1-ns mr1-ns br3')}
+             id="record" 
+             type="button" 
+             value="Record"
+          ></input>
+          <input className={classNames('mt1-ns br3')}
+             id="reset" 
+             type="button" 
+             value="Reset Song"
+          ></input>
+        </div>
+
+        <div className={classNames('ml2-ns')}>
+	        <form action="http://www.google.com">
+    	      <input className={classNames('ml1-ns br2-m f4-m tc-l w-90 mt1-ns')} 
+                   id="text" 
+                   type="text" 
+                   name="new_song_title" 
+                   placeholder="Name Your Song"
+            />
+            <input className={classNames('ml1-ns txt_shdw_blk bg-light-blue dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--diarreen br3 white w-90-ns f7 tc-ns mt1-ns')}
+                   id="submit" 
+                   type="button" 
+                   value="submit"
+            ></input>
+          </form> 
+        </div>
       </div>
     </Section>
   );
@@ -141,13 +196,13 @@ function Player({ state }: SideNavProps): JSX.Element {
 
 export function SideNav({ state, dispatch }: SideNavProps): JSX.Element {
   return (
-    <div className="absolute top-0 left-0 bottom-0 w5 z-1 shadow-1 bg-white flex flex-column">
+    <div className="absolute top-0 left-0 bottom-0 w6 z-1 shadow-1 bg-white flex flex-column">
       <div className="h3 fw7 f5 flex items-center pl3 bb b--light-gray">Treble with TS</div>
       <div className="flex-auto">
         <Instruments state={state} dispatch={dispatch} />
         <Visualizers state={state} dispatch={dispatch} />
-        <Songs state={state} dispatch={dispatch} />
         <Player state={state} dispatch={dispatch} />
+        <Songs state={state} dispatch={dispatch} />
       </div>
     </div>
   );
