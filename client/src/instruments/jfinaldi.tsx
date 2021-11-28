@@ -6,19 +6,16 @@ import BK from '../img/blackKey_a.svg';
 import WK from '../img/whiteKey_a.png';
 
 interface CatKeyProps {
-  note: string; // C, Db, D, Eb, E, F, Gb, G, Ab, A, Bb, B
   noteb: number;
-  duration?: string;
   player?: Tone.Player; // Contains library code for making sound
-  minor?: boolean; // True if minor key, false if major key
+  isFlat?: boolean;
   index: number; // octave + index together give a location for the piano key
 }
 
 export function CatKey({
-  note,
   noteb, // this is the adjusting number for varying notes
   player,
-  minor,
+  isFlat,
   index,
 }: CatKeyProps): JSX.Element {
 
@@ -34,25 +31,21 @@ export function CatKey({
           player.autostart = true;
         });
     } catch (e) {
-      console.log("fetch error for note", note);
+      console.log("fetch error for note");
       throw(e);
     }
   };
 
   // return a black paw
-  if(minor) {
+  if(isFlat) {
     return (
       <div 
         onClick={cat_meow}
         style={{
-          position: 'absolute',
-          top: 0,
-          left: `${index * 2}rem`,
-          zIndex: 1,
-          width: '1.5rem',
-          marginLeft: '0.25rem',
-        }}>
-        <img src={BK} alt="BK" width="40" height="100"></img>
+          left: `${index * 2 + 0.1}rem`, 
+        }}
+        className='absolute top--2-ns z-1 w3 ml1'>
+        <img src={BK} alt="BK" height="110"></img>
       </div>
     );
   }
@@ -62,14 +55,10 @@ export function CatKey({
       <div 
         onClick={cat_meow}
         style={{
-          position: 'absolute',
-          top: '2rem',
           left: `${index * 2}rem`,
-          zIndex: 0,
-          width: '2rem',
-          marginLeft: 0,
-        }}>
-        <img src={WK} alt="WK" width="45" height="150"></img>
+        }}
+        className='absolute top-0 z-0 w2 ml1'>
+        <img src={WK} alt="WK" height="150"></img>
       </div>
     );
   }
@@ -84,18 +73,18 @@ function CatPiano(): JSX.Element {
   // result mimics different key notes to some degree of accuracy 
   const keys = List([
     // first octave
-    { noteb: 0.750, note: 'C', idx: 0 },       // x
-    { noteb: 0.785, note: 'Db', idx: 0.5 },    // x
-    { noteb: 0.830, note: 'D', idx: 1 },       // x
-    { noteb: 0.885, note: 'Eb', idx: 1.5 },    // x
-    { noteb: 0.950, note: 'E', idx: 2 },       // x
-    { noteb: 1.030, note: 'F', idx: 3 },       // x
-    { noteb: 1.089, note: 'Gb', idx: 3.5 },    // x
-    { noteb: 1.150, note: 'G', idx: 4 },       // x
-    { noteb: 1.185, note: 'Ab', idx: 4.5 },    // x (double check)
-    { noteb: 1.268, note: 'A', idx: 5 },       // x
-    { noteb: 1.330, note: 'Bb', idx: 5.5 },    // x
-    { noteb: 1.455, note: 'B', idx: 6 },       // x
+    { noteb: 0.750, isFlat: false, idx: 0 },      // x
+    { noteb: 0.785, isFlat: true,  idx: 0.5 },    // x
+    { noteb: 0.830, isFlat: false, idx: 1 },      // x
+    { noteb: 0.885, isFlat: true,  idx: 1.5 },    // x
+    { noteb: 0.950, isFlat: false, idx: 2 },      // x
+    { noteb: 1.030, isFlat: false, idx: 3 },      // x
+    { noteb: 1.089, isFlat: true,  idx: 3.5 },    // x
+    { noteb: 1.150, isFlat: false, idx: 4 },      // x
+    { noteb: 1.185, isFlat: true,  idx: 4.5 },    // x (double check)
+    { noteb: 1.268, isFlat: false, idx: 5 },      // x
+    { noteb: 1.330, isFlat: true,  idx: 5.5 },    // x
+    { noteb: 1.455, isFlat: false, idx: 6 },      // x
 
     // second octave 
     /*To calculate these, I used a percentage of the values between
@@ -105,43 +94,38 @@ function CatPiano(): JSX.Element {
     by 0.9554 to get Db2 scaled in the same way that C and Db are.
     The reason this was done this way was so that I would only have
     to tune one octave by ear instead of two.*/
-    { noteb: 1.567, note: 'C2', idx: 7 },      // x 
-    { noteb: 1.640, note: 'Db2', idx: 7.5 },   // 1.640 = 1.567 / .9554
-    { noteb: 1.741, note: 'D2', idx: 8 },      // x
-    { noteb: 1.848, note: 'Eb2', idx: 8.5 },   // 1.848 = 1.640 / 0.887
-    { noteb: 1.994, note: 'E2', idx: 9 },      // delta = 1 - 0.873
-    { noteb: 2.200, note: 'F2', idx: 10 },     // .90476
-    { noteb: 2.282, note: 'Gb2', idx: 10.5 },  // 2.282 = 2.2 / 0.9641
-    { noteb: 2.400, note: 'G2', idx: 11 },     // 2.2 / 0.913
-    { noteb: 2.483, note: 'Ab2', idx: 11.5 },  // 2.282 / .91898
-    { noteb: 2.646, note: 'A2', idx: 12 },     // 0.9069
-    { noteb: 2.787, note: 'Bb2', idx: 12.5 },  // 2.483 / 0.891
-    { noteb: 3.036, note: 'B2', idx: 13 },     // 0.87147
+    { noteb: 1.567, isFlat: false, idx: 7 },      // x 
+    { noteb: 1.640, isFlat: true,   idx: 7.5 },    // 1.640 = 1.567 / .9554
+    { noteb: 1.741, isFlat: false, idx: 8 },      // x
+    { noteb: 1.848, isFlat: true,   idx: 8.5 },    // 1.848 = 1.640 / 0.887
+    { noteb: 1.994, isFlat: false, idx: 9 },      // delta = 1 - 0.873
+    { noteb: 2.200, isFlat: false, idx: 10 },     // .90476
+    { noteb: 2.282, isFlat: true,   idx: 10.5 },   // 2.282 = 2.2 / 0.9641
+    { noteb: 2.400, isFlat: false, idx: 11 },     // 2.2 / 0.913
+    { noteb: 2.483, isFlat: true,   idx: 11.5 },   // 2.282 / .91898
+    { noteb: 2.646, isFlat: false, idx: 12 },     // 0.9069
+    { noteb: 2.787, isFlat: true,   idx: 12.5 },   // 2.483 / 0.891
+    { noteb: 3.036, isFlat: false, idx: 13 },     // 0.87147
   ]);
 
   return (
     /*Outer box for the purple background */
-    <div className={classNames('pv4', 'pl5', 'bg-light-purple')}>
+    <div className={classNames('pv4 pl5 bg-light-purple')}>
       {/*Inner box for the actual keyboard */}
-      <div className={classNames('relative', 'dib', 'h5', 
-                                  'ml4', 'justify-center')}>
+      <div className={classNames('relative flex h5 mt4')}>  
         {Range(1, 2).map(keyboard =>
           keys.map(key => {
-            const isMinor = key.note.indexOf('b') !== -1;
-            const note = `${key.note}${keyboard}`;
             return (
               <CatKey
-                key={note}
-                note={note}
                 noteb={key.noteb}
-                minor={isMinor}
+                isFlat={key.isFlat}
                 index={(keyboard - 1) * 2 + key.idx}
               />
             );
           }),
         )}
       </div>
-      <div className={classNames('avenir', 'fw8', 'b', 'f1','dib', 'ml4-ns', 'pl5')}>
+      <div className={classNames('avenir fw8 b f1 ml4-ns pl5')}>
         DJ CatPaw
       </div>
     </div>
