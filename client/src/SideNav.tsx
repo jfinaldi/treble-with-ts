@@ -122,27 +122,27 @@ function Player({ state }: SideNavProps): JSX.Element {
           value={selected} 
           onChange={(nextValue) => setSelected(nextValue)} 
         />
-        <div className={classNames("tc-ns f8-ns b-m pt2 pb2 pl2-m pr2-m black")} 
+        <div className={classNames("tc-ns f8-ns pt1 pb1 pl2-m pr2-m black")} 
              id="song_title">
           {selected}
         </div>
         <div className={classNames('ml3-ns pl1')}>
           <input
-            className={classNames('mr1-ns b-m green bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+            className={classNames('h2 mr1-ns b-m green bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
             id="play"
             type="button"
             value="Play"
             onClick={() => Play(state, selected, "play", true)}
           ></input>
           <input
-            className={classNames('mr1-ns b-m black bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+            className={classNames('h2 mr1-ns b-m black bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
             id="pause"
             type="button"
             value="Pause"
             onClick={() => Play(state, selected, "pause")}
           ></input>
           <input
-            className={classNames('b-m red bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+            className={classNames('h2 b-m red bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
             id="stop"
             type="button"
             value="Stop"
@@ -156,7 +156,7 @@ function Player({ state }: SideNavProps): JSX.Element {
                  type="button" 
                  value="Record"
           ></input>
-          <input className={classNames("mt1-ns br3")} 
+          <input className={classNames("mt1-ns br3 ml1-ns")} 
                  id="reset" 
                  type="button" 
                  value="Reset Song"
@@ -165,13 +165,13 @@ function Player({ state }: SideNavProps): JSX.Element {
 
         <div className={classNames('ml0-ns pl2')}>
           <form action="http://www.google.com">
-            <input className={classNames("ml1-ns br2-m f4-m tc-l w-90 mt1-ns")} 
+            <input className={classNames("tc ml2-ns br2-m f5-m tc-l w-90 mt1-ns")} 
                    id="text" 
                    type="text" 
                    name="new_song_title" 
                    placeholder="Name Your Song"
             />
-            <input className={classNames('ml1-ns txt_shdw_blk bg-light-blue dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--blue br3 white w-90-ns f5 tc-ns mt1-ns')}
+            <input className={classNames('ml2-ns txt_shdw_blk bg-light-blue dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--blue br3 white w-90-ns f5 tc-ns mt1-ns')}
               id="submit"
               type="button"
               value="submit"
