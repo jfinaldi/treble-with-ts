@@ -25,7 +25,7 @@ interface SideNavProps {
 
 const Section: React.FC<{ title: string }> = ({ title, children }) => {
   return (
-    <div className="flex flex-column h-25 bb b--light-gray pa3">
+    <div className="flex flex-column h-auto bb b--light-gray pa3">
       <div className="fw7 mb2">{title} </div>
       <div className="flex-auto overflow-scroll">{children}</div>
     </div>
@@ -106,80 +106,89 @@ function Songs({ state, dispatch }: SideNavProps): JSX.Element {
 }
 
 function Player({ state }: SideNavProps): JSX.Element {
+  let visible: boolean = true;
   const [songs, setSongs] = useState(["Empty"]);
   const [selected, setSelected] = useState("");
   useEffect(() => {
     setSongs(state.get("songs", List()).reduce((acc: any, song: any) => acc.concat([song.get("songTitle")]), [] as any[]));
   }, [state]);
   return (
-    <Section title="Jukebox">
-      <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl0 pr0 pb3 pt1 dib-ns")}>
-        <Combobox 
-          hideCaret 
-          hideEmptyPopup 
-          placeholder="Search Song by Title" 
-          data={songs} 
-          value={selected} 
-          onChange={(nextValue) => setSelected(nextValue)} 
-        />
-        <div className={classNames("tc-ns f8-ns pt1 pb1 pl2-m pr2-m black")} 
-             id="song_title">
-          {selected}
-        </div>
-        <div className={classNames('ml3-ns pl1')}>
-          <input
-            className={classNames('h2 mr1-ns b-m green bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
-            id="play"
-            type="button"
-            value="Play"
-            onClick={() => Play(state, selected, "play", true)}
-          ></input>
-          <input
-            className={classNames('h2 mr1-ns b-m black bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
-            id="pause"
-            type="button"
-            value="Pause"
-            onClick={() => Play(state, selected, "pause")}
-          ></input>
-          <input
-            className={classNames('h2 b-m red bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
-            id="stop"
-            type="button"
-            value="Stop"
-            onClick={() => Play(state, selected, "stop")}
-          ></input>
-        </div>
-
-        <div className={classNames('ml2-ns pl2')}>
-          <input className={classNames("ml1-ns mt1-ns mr1-ns br3")} 
-                 id="record" 
-                 type="button" 
-                 value="Record"
-          ></input>
-          <input className={classNames("mt1-ns br3 ml1-ns")} 
-                 id="reset" 
-                 type="button" 
-                 value="Reset Song"
-          ></input>
-        </div>
-
-        <div className={classNames('ml0-ns pl2')}>
-          <form action="http://www.google.com">
-            <input className={classNames("tc ml2-ns br2-m f5-m tc-l w-90 mt1-ns")} 
-                   id="text" 
-                   type="text" 
-                   name="new_song_title" 
-                   placeholder="Name Your Song"
-            />
-            <input className={classNames('ml2-ns txt_shdw_blk bg-light-blue dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--blue br3 white w-90-ns f5 tc-ns mt1-ns')}
-              id="submit"
+    <div>
+      {/* <input type="button" 
+             value="show" 
+             onClick={() => visible = !visible }
+      /> */}
+      <Section title="Jukebox">
+      { visible ? 
+        <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl0 pr0 pb3 pt1 dib-ns")}>
+          <Combobox 
+            hideCaret 
+            hideEmptyPopup 
+            placeholder="Search Song by Title" 
+            data={songs} 
+            value={selected} 
+            onChange={(nextValue) => setSelected(nextValue)} 
+          />
+          <div className={classNames("tc-ns f8-ns pt1 pb1 pl2-m pr2-m black")} 
+              id="song_title">
+            {selected}
+          </div>
+          <div className={classNames('ml3-ns pl1')}>
+            <input
+              className={classNames('h2 mr1-ns b-m green bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+              id="play"
               type="button"
-              value="submit"
+              value="Play"
+              onClick={() => Play(state, selected, "play", true)}
             ></input>
-          </form>
+            <input
+              className={classNames('h2 mr1-ns b-m black bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+              id="pause"
+              type="button"
+              value="Pause"
+              onClick={() => Play(state, selected, "pause")}
+            ></input>
+            <input
+              className={classNames('h2 b-m red bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+              id="stop"
+              type="button"
+              value="Stop"
+              onClick={() => Play(state, selected, "stop")}
+            ></input>
+          </div>
+
+          <div className={classNames('ml2-ns pl2')}>
+            <input className={classNames("ml1-ns mt1-ns mr1-ns br3")} 
+                  id="record" 
+                  type="button" 
+                  value="Record"
+            ></input>
+            <input className={classNames("mt1-ns br3 ml1-ns")} 
+                  id="reset" 
+                  type="button" 
+                  value="Reset Song"
+            ></input>
+          </div>
+
+          <div className={classNames('ml0-ns pl2')}>
+            <form action="http://www.google.com">
+              <input className={classNames("tc ml2-ns br2-m f5-m tc-l w-90 mt1-ns")} 
+                    id="text" 
+                    type="text" 
+                    name="new_song_title" 
+                    placeholder="Name Your Song"
+              />
+              <input className={classNames('ml2-ns txt_shdw_blk bg-light-blue dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--blue br3 white w-90-ns f5 tc-ns mt1-ns')}
+                id="submit"
+                type="button"
+                value="submit"
+              ></input>
+            </form>
+          </div>
         </div>
-      </div>
-    </Section>
+      : null }
+      </Section>
+    </div>
   );
 }
 
