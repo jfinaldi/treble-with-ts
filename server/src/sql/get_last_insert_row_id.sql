@@ -1,0 +1,1 @@
+SELECT last_insert_rowid() as last_inserted_id;

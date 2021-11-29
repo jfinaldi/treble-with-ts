@@ -1,0 +1,1 @@
+INSERT INTO songs (author, name, instrumentId) VALUES ( ?, ?, ?);
