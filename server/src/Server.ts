@@ -7,6 +7,8 @@ import {
   GetAllSongsHandler,
   GetRandomSongsHandler,
   SearchSongsHandler,
+  InsertSongHandler,
+  DeleteSongHandler,
 } from "./handlers";
 
 const PORT = 3001;
@@ -21,6 +23,8 @@ export const validMessages: MessageHandler[] = [
   GetAllSongsHandler,
   GetRandomSongsHandler,
   SearchSongsHandler,
+  InsertSongHandler,
+  DeleteSongHandler,
 ];
 
 function disconnectHandler(socket: Socket): (reason: string) => void {
@@ -140,18 +144,25 @@ app.listen(port, (err: any) => {
 // test code:
 // (async () => {
 //   try {
-//     const fs = require("fs");
-//     const path = require("path");
-//     fs.unlinkSync(path.join(__dirname, "..", "app.db"));
-//     await DB.initializeDB();
-//     console.log("init db now");
-//     let result;
-//     // let result = await DB.runQuery("get_all_songs");
+//     // const fs = require("fs");
+//     // const path = require("path");
+//     // fs.unlinkSync(path.join(__dirname, "..", "app.db"));
+//     // await DB.initializeDB();
+//     // console.log("init db now");
+//     // let result;
+
+//     // await DB.runQuery("delete_song", 5);
+//     // await DB.runQuery("delete_notes", 5);
+
+//     // result = await DB.runQuery("get_all_songs");
 //     // console.log("came here with: ", result);
-//     // result = await DB.runQuery("get_random_songs");
+
+//     // result = await DB.runQuery("get_all_notes");
 //     // console.log("came here with: ", result);
-//     result = await DB.runQuery("search_songs", "Default", "Default", "Default", "Default");
-//     console.log("came here with: ", result);
+//     // // result = await DB.runQuery("get_random_songs");
+//     // // console.log("came here with: ", result);
+//     // result = await DB.runQuery("search_songs", "Default", "Default", "Default", "Default");
+//     // console.log("came here with: ", result);
 //   } catch (err) {
 //     console.log("ERROR HERE INSTEAD: ", err);
 //   }
