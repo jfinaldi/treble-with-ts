@@ -55,7 +55,12 @@ const h8 = {
 
 const xylophone = {
   width: "600px",
-  marginLeft: "250px",
+  // marginLeft: "250px",
+  marginLeft: "50px",
+
+  // NEW
+  marginBottom: "50px",
+  marginTop: "50px",
   marginUp: "100px",
 };
 
@@ -82,7 +87,7 @@ function XyloPhone(): JSX.Element {
           width: "585px",
           height: "21px",
           backgroundColor: "#663300",
-          marginTop: "100px",
+          marginTop: "135px",
           marginBottom: "-110px",
           zIndex: 1,
         }}

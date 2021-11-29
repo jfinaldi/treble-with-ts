@@ -32,7 +32,7 @@ export class Instrument {
 
 function TopNav({ name }: { name: string }) {
   return (
-    <div className={"w-100 h3 bb b--light-gray flex justify-between items-center ph4"}>
+    <div className={"b fw8 w-100 h3 f2 bb b--light-gray bg-white flex justify-between items-center ph4"}>
       <div>{name}</div>
     </div>
   );
@@ -85,7 +85,8 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({ instru
   return (
     <div>
       <TopNav name={instrument.name} />
-      <div className={"bg-white absolute right-0 left-0"} style={{ top: "4rem" }}>
+      {/* <div className={"bg-white absolute right-0 left-0"} style={{ top: "4rem" }}> */}
+      <div className={"absolute right-0 left-0"} style={{ top: "4rem" }}>
         <InstrumentComponent name={instrument.name} state={state} dispatch={dispatch} synth={synth} setSynth={setSynth} />
       </div>
     </div>

@@ -90,7 +90,7 @@ function PianoType({ title, onClick, active }: any): JSX.Element {
   return (
     <div
       onClick={onClick}
-      className={classNames('dim pointer ph2 pv1 ba mr2 br1 fw7 bw1', {
+      className={classNames('bg-white dim pointer ph2 pv1 ba mr2 br1 fw7 bw1', {
         'b--black black': active,
         'gray b--light-gray': !active,
       })}

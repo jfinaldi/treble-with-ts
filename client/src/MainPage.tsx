@@ -109,9 +109,9 @@ export function MainPage({ state, dispatch }: PanelProps): JSX.Element {
 
   return (
     <div
-      className="fixed top-0 left-0 h-100 w-100 bg-white"
-      onClick={() => Tone.start()}
-    >
+      className="fixed top-0 left-0 h-100 w-100 bg-lightest-blue"
+      // className="top-0 left-0 h-25 w-100 bg-white"
+      onClick={() => Tone.start()}>
       <SideNav state={state} dispatch={dispatch} />
       {isWelcome ? (
         <ShowWelcome />

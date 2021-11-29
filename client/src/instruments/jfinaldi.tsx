@@ -78,7 +78,7 @@ function CatPiano(): JSX.Element {
     { noteb: 0.830, isFlat: false, idx: 1 },      // x
     { noteb: 0.885, isFlat: true,  idx: 1.5 },    // x
     { noteb: 0.950, isFlat: false, idx: 2 },      // x
-    { noteb: 1.030, isFlat: false, idx: 3 },      // x
+    { noteb: 1.030, isFlat: false, idx: 3 },      // x OUT OF TUNE
     { noteb: 1.089, isFlat: true,  idx: 3.5 },    // x
     { noteb: 1.150, isFlat: false, idx: 4 },      // x
     { noteb: 1.185, isFlat: true,  idx: 4.5 },    // x (double check)
@@ -99,7 +99,7 @@ function CatPiano(): JSX.Element {
     { noteb: 1.741, isFlat: false, idx: 8 },      // x
     { noteb: 1.848, isFlat: true,   idx: 8.5 },    // 1.848 = 1.640 / 0.887
     { noteb: 1.994, isFlat: false, idx: 9 },      // delta = 1 - 0.873
-    { noteb: 2.200, isFlat: false, idx: 10 },     // .90476
+    { noteb: 2.195, isFlat: false, idx: 10 },     // .90476     
     { noteb: 2.282, isFlat: true,   idx: 10.5 },   // 2.282 = 2.2 / 0.9641
     { noteb: 2.400, isFlat: false, idx: 11 },     // 2.2 / 0.913
     { noteb: 2.483, isFlat: true,   idx: 11.5 },   // 2.282 / .91898
@@ -110,23 +110,23 @@ function CatPiano(): JSX.Element {
 
   return (
     /*Outer box for the purple background */
-    <div className={classNames('pv4 pl5 bg-light-purple')}>
-      {/*Inner box for the actual keyboard */}
-      <div className={classNames('relative flex h5 mt4')}>  
-        {Range(1, 2).map(keyboard =>
-          keys.map(key => {
-            return (
-              <CatKey
-                noteb={key.noteb}
-                isFlat={key.isFlat}
-                index={(keyboard - 1) * 2 + key.idx}
-              />
-            );
-          }),
-        )}
-      </div>
-      <div className={classNames('avenir fw8 b f1 ml4-ns pl5')}>
-        DJ CatPaw
+    // <div className={classNames('pv4 pl5 bg-light-purple')}>
+    <div className={classNames('mt5 pv1 pl0')}>
+      <div className={classNames('relative ml5 pv1 h5 bg-light-purple w-65-ns br3 shadow-6')}>
+        {/*Inner box for the actual keyboard */}
+        <div className={classNames('relative flex mt5 ml4')}>  
+          {Range(1, 2).map(keyboard =>
+            keys.map(key => {
+              return (
+                <CatKey
+                  noteb={key.noteb}
+                  isFlat={key.isFlat}
+                  index={(keyboard - 1) * 2 + key.idx}
+                />
+              );
+            }),
+          )}
+        </div>
       </div>
     </div>
   );

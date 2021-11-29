@@ -6,6 +6,9 @@ import smn from "../img/drums/smn_.svg";
 import { useState } from "react";
 import { Instrument } from "../Instruments";
 import "./drums.css";
+import { Automatic16 } from "@carbon/icons-react";
+import classNames from "classnames";
+
 function Drums(): JSX.Element {
   const [record, setRecord] = useState(false);
   const [track, setTrack] = useState([] as any[]);
@@ -21,14 +24,16 @@ function Drums(): JSX.Element {
     beat.autostart = true;
   };
   return (
-    <div>
+    <div className={classNames('pt4')}> {/*NEW */}
+    {/* <div> */}
       {/** RECORD Component INSERT HERE */}
-      <button onClick={() => setRecord(true)}>Record</button>
+      {/* <button onClick={() => setRecord(true)}>Record</button>
       <button onClick={() => setRecord(false)}>Stop Record</button>
       <button onClick={() => clear()}>Clear</button>
-      <button onClick={() => save()}>Save</button>
+      <button onClick={() => save()}>Save</button> */}
       {/** RECORD Component INSERT HERE */}
-      <div className="drum_container">
+      <div className={classNames('h-inherit br4 pb2 bg-light-blue w-75 justify-between shadow-6 center ')}> {/*NEW */}
+        <div className="drum_container">
         <img src={Top_Left} alt="a" style={{ height: 200, width: 150, transform: "rotate(20deg)" }} onClick={() => drum_boom(4)} />
         <img src={Mini_Boom} alt="b" style={{ height: 150, width: 150, transform: "rotate(0)" }} onClick={() => drum_boom(5)} />
         <img src={Top_Left} alt="c" style={{ height: 150, width: 150, transform: "rotate(-20deg)" }} onClick={() => drum_boom(6)} />
@@ -38,6 +43,7 @@ function Drums(): JSX.Element {
         <img src={smn} alt="g" style={{ height: 150, width: 150, transform: "rotate(0deg)" }} onClick={() => drum_boom(10)} />
         <img src={Bass} alt="k" style={{ height: 150, width: 150 }} onClick={() => drum_boom(11)} />
         <img src={smn} alt="m" style={{ height: 150, width: 150, transform: "rotate(0deg)" }} onClick={() => drum_boom(12)} />
+        </div>
       </div>
     </div>
   );
