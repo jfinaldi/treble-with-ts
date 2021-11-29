@@ -1,8 +1,8 @@
-import _sqlite3, { Database, Statement } from 'sqlite3';
-import fs from 'fs/promises';
-import { constants } from 'fs';
-import path from 'path';
-import camelcaseKeys from 'camelcase-keys';
+import _sqlite3, { Database, Statement } from "sqlite3";
+import fs from "fs/promises";
+import { constants } from "fs";
+import path from "path";
+import camelcaseKeys from "camelcase-keys";
 
 // Let's get stack traces.
 const sqlite3 = _sqlite3.verbose();
@@ -16,7 +16,7 @@ export class DB {
   // FIXME: we can initialize differently for production
   // NOTE: We may want to use :memory: for local environments... not sure what's best
   // with hot-reloading. For now, I'm using app.db and gitignore'ing it.
-  private static readonly DB_PATH: string = 'app.db';
+  private static readonly DB_PATH: string = "app.db";
   private static hasInitialized: boolean;
   private static memo: Map<string, string> = new Map();
 
@@ -35,24 +35,23 @@ export class DB {
 
   private static async cleanupDB(): Promise<void> {}
 
-  private static async initializeDB(): Promise<Database> {
+  public static async initializeDB(): Promise<Database> {
     const existsAlready = await DB.exists();
     const db = new sqlite3.Database(DB.DB_PATH);
-
     if (!existsAlready && !this.hasInitialized) {
       // We can do this because TypeScript is single-threaded and guaranteed
       // not to put us back into a wait queue if we don't await.
       DB.hasInitialized = true;
 
-      const schema = await slurp('schema');
+      const schema = await slurp("schema");
       return new Promise((resolve, reject) =>
-        db.exec(schema, err => {
+        db.exec(schema, (err) => {
           if (err) {
             reject(err);
           } else {
             resolve(db);
           }
-        }),
+        })
       );
     }
 
@@ -85,7 +84,7 @@ export class DB {
         if (err) {
           reject(err);
         } else {
-          resolve(rows.map(r => camelcaseKeys(r)));
+          resolve(rows.map((r) => camelcaseKeys(r)));
         }
       });
     });
@@ -93,6 +92,6 @@ export class DB {
 }
 
 async function slurp(sqlFile: string): Promise<string> {
-  const buf = await fs.readFile(path.join('src', 'sql', `${sqlFile}.sql`));
-  return buf.toString('utf8');
+  const buf = await fs.readFile(path.join("src", "sql", `${sqlFile}.sql`));
+  return buf.toString("utf8");
 }
