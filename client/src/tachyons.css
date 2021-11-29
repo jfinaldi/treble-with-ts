@@ -386,6 +386,7 @@
  .b--dark-green { border-color: #137752; }
  .b--green { border-color: #19a974; }
  .b--light-green { border-color: #9eebcf; }
+ .b--diarreen { border-color: #84a680; }
  .b--navy { border-color: #001b44; }
  .b--dark-blue { border-color: #00449e; }
  .b--blue { border-color: #357edd; }
@@ -2284,6 +2285,7 @@
 	.pa6-ns { padding: 8rem; }
 	.pa7-ns { padding: 16rem; }
 	.pl0-ns { padding-left: 0; }
+	.pl00-ns { padding-left: 0.063rem; }
 	.pl1-ns { padding-left: .25rem; }
 	.pl2-ns { padding-left: .5rem; }
 	.pl3-ns { padding-left: 1rem; }
@@ -2292,6 +2294,7 @@
 	.pl6-ns { padding-left: 8rem; }
 	.pl7-ns { padding-left: 16rem; }
 	.pr0-ns { padding-right: 0; }
+	.pr00-ns { padding-right: 0.063rem; }
 	.pr1-ns { padding-right: .25rem; }
 	.pr2-ns { padding-right: .5rem; }
 	.pr3-ns { padding-right: 1rem; }
@@ -2300,6 +2303,7 @@
 	.pr6-ns { padding-right: 8rem; }
 	.pr7-ns { padding-right: 16rem; }
 	.pb0-ns { padding-bottom: 0; }
+	.pb00-ns { padding-bottom: 0.313rem; }
 	.pb1-ns { padding-bottom: .25rem; }
 	.pb2-ns { padding-bottom: .5rem; }
 	.pb3-ns { padding-bottom: 1rem; }
@@ -2308,6 +2312,7 @@
 	.pb6-ns { padding-bottom: 8rem; }
 	.pb7-ns { padding-bottom: 16rem; }
 	.pt0-ns { padding-top: 0; }
+	.pt00-ns { padding-top: 0.313rem; }
 	.pt1-ns { padding-top: .25rem; }
 	.pt2-ns { padding-top: .5rem; }
 	.pt3-ns { padding-top: 1rem; }
@@ -2437,6 +2442,7 @@
 	.f-5-ns, .f-subheadline-ns { font-size: 5rem; }
 	.f1-ns { font-size: 3rem; }
 	.f2-ns { font-size: 2.25rem; }
+	.f25-ns { font-size: 1.75rem; }
 	.f3-ns { font-size: 1.5rem; }
 	.f4-ns { font-size: 1.25rem; }
 	.f5-ns { font-size: 1rem; }
@@ -2766,6 +2772,7 @@
 	.ma6-m { margin: 8rem; }
 	.ma7-m { margin: 16rem; }
 	.ml0-m { margin-left: 0; }
+	.ml00-m { margin-left: 0.063rem; }
 	.ml1-m { margin-left: .25rem; }
 	.ml2-m { margin-left: .5rem; }
 	.ml3-m { margin-left: 1rem; }
@@ -2774,6 +2781,7 @@
 	.ml6-m { margin-left: 8rem; }
 	.ml7-m { margin-left: 16rem; }
 	.mr0-m { margin-right: 0; }
+	.mr00-m { margin-right: .063rem; }
 	.mr1-m { margin-right: .25rem; }
 	.mr2-m { margin-right: .5rem; }
 	.mr3-m { margin-right: 1rem; }
@@ -2782,6 +2790,7 @@
 	.mr6-m { margin-right: 8rem; }
 	.mr7-m { margin-right: 16rem; }
 	.mb0-m { margin-bottom: 0; }
+	.mb00-m { margin-bottom: .125rem; }
 	.mb1-m { margin-bottom: .25rem; }
 	.mb2-m { margin-bottom: .5rem; }
 	.mb3-m { margin-bottom: 1rem; }
@@ -2790,6 +2799,7 @@
 	.mb6-m { margin-bottom: 8rem; }
 	.mb7-m { margin-bottom: 16rem; }
 	.mt0-m { margin-top: 0; }
+	.mt00-m { margin-top: .125rem; }
 	.mt1-m { margin-top: .25rem; }
 	.mt2-m { margin-top: .5rem; }
 	.mt3-m { margin-top: 1rem; }
@@ -3311,6 +3321,10 @@
 	.v-mid-l { vertical-align: middle; }
 	.v-top-l { vertical-align: top; }
 	.v-btm-l { vertical-align: bottom; }
+
+
+	.bsblk { border: solid-black; }
+	.txt_shdw_blk { text-shadow: 1px 1px #070606; }
  }
  
  

@@ -1,0 +1,19 @@
+.drum_container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 0.1fr 0.1fr 0.1fr;
+  justify-content: center;
+  /* cursor: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/meh.png"), auto; */
+  cursor: url("../img/drums/drum_wand.png"), auto;
+}
+img:active {
+  animation: vibrate 0.1s infinite;
+}
+@keyframes vibrate {
+  50% {
+    transform: rotate(2deg) translateX(1px);
+  }
+  100% {
+    transform: rotate(-2deg) translateX(-1px);
+  }
+}

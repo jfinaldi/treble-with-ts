@@ -122,16 +122,43 @@ function Songs({ state, dispatch }: SideNavProps): JSX.Element {
   );
 }
 
+function Player({ state, dispatch}: SideNavProps): JSX.Element {
+  return (
+    <Section title="Jukebox">
+      <div className={classNames('ba bsblk bg-moon-gray pl3 pr3 pb3 pt1 dib-ns')}>
+        <div>
+	        <form action="http://www.google.com">
+    	      <input className={classNames('br2-m f4-m tc-l w-75')} 
+                   id="text" type="text" name="song_title" 
+                   placeholder="Search Song by Title"/>
+            <input className={classNames('txt_shdw_blk ml1 bg-light-green dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--diarreen br3 white w-20 f4 tc-ns')}
+                   id="go" type="button" value="Go"></input>
+          </form>    
+        </div>
+        <div className={classNames('tc-ns f4-ns b-m pt2 pb2 pl2-m pr2-m black')} 
+             id="song_title">"Ode to Joy"</div>
+        <input className={classNames('b-m green bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+             id="play" type="button" value="Play"></input>
+        <input className={classNames('b-m black bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+             id="pause" type="button" value="Pause"></input>
+        <input className={classNames('b-m red bg-white-60 bsblk br3 pl2 pr2 pt3 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover')}
+             id="stop" type="button" value="Stop"></input>
+      </div>
+    </Section>
+  );
+}
+
 export function SideNav({ state, dispatch }: SideNavProps): JSX.Element {
   return (
     <div className="absolute top-0 left-0 bottom-0 w5 z-1 shadow-1 bg-white flex flex-column">
       <div className="h3 fw7 f5 flex items-center pl3 bb b--light-gray">
-        Nameless App
+        Treble with TS
       </div>
       <div className="flex-auto">
         <Instruments state={state} dispatch={dispatch} />
         <Visualizers state={state} dispatch={dispatch} />
         <Songs state={state} dispatch={dispatch} />
+        <Player state={state} dispatch={dispatch} />
       </div>
     </div>
   );

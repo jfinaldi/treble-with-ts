@@ -1,15 +1,15 @@
 // 3rd party library imports
-import { useReducer, useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useReducer, useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // project imports
-import { MainPage } from './MainPage';
-import { DispatchAction, appReducer } from './Reducer';
-import { defaultState } from './State';
-import { initializeSocket, send } from './Socket';
+import { MainPage } from "./MainPage";
+import { DispatchAction, appReducer } from "./Reducer";
+import { defaultState } from "./State";
+import { initializeSocket, send } from "./Socket";
 
 // css imports
-import 'animate.css';
+import "animate.css";
 
 /** ------------------------------------------------------------------------ **
  * App component
@@ -20,14 +20,21 @@ function App() {
 
   useEffect(() => {
     initializeSocket(
-      async socket => {
-        dispatch(new DispatchAction('SET_SOCKET', { socket }));
-        const { songs } = await send(socket, 'get_songs', {});
-        dispatch(new DispatchAction('SET_SONGS', { songs }));
+      async (socket) => {
+        dispatch(new DispatchAction("SET_SOCKET", { socket }));
+        // let test = await send(socket, "insert_song", {
+        //   instrument: "piano",
+        //   author: "J",
+        //   songName: "bruh",
+        //   notes: ["a", "b", "c", "d", "e"],
+        // });
+        const { songs } = await send(socket, "get_all_songs", {});
+        // test websockets here
+        dispatch(new DispatchAction("SET_SONGS", { songs }));
       },
       () => {
-        dispatch(new DispatchAction('DELETE_SOCKET'));
-      },
+        dispatch(new DispatchAction("DELETE_SOCKET"));
+      }
     );
   }, []);
 
