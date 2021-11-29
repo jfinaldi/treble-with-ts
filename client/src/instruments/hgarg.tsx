@@ -1,4 +1,4 @@
-import { NonCertified16 } from "@carbon/icons-react";
+import { Automatic16, NonCertified16 } from "@carbon/icons-react";
 import * as Tone from "tone";
 import { Instrument } from "../Instruments";
 
@@ -16,41 +16,49 @@ const buttonStyle = {
 const h1 = {
   height: "200px",
   backgroundColor: "#660033",
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
 };
 
 const h2 = {
   height: "185px",
   backgroundColor: "#00CCCC",
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
 };
 
 const h3 = {
   height: "170px",
   backgroundColor: "#006666",
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
 };
 
 const h4 = {
   height: "155px",
   backgroundColor: "#666600",
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
 };
 
 const h5 = {
   height: "140px",
   backgroundColor: "#B2FF66",
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
 };
 
 const h6 = {
   height: "125px",
   backgroundColor: "#003366",
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
 };
 
 const h7 = {
   height: "110px",
   backgroundColor: "#FF8000",
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
 };
 
 const h8 = {
   height: "95px",
   backgroundColor: "#FF0000",
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
 };
 
 const xylophone = {
@@ -59,9 +67,10 @@ const xylophone = {
   marginLeft: "50px",
 
   // NEW
-  marginBottom: "50px",
-  marginTop: "50px",
-  marginUp: "100px",
+  margin: "auto",
+  // marginBottom: "50px",
+  marginTop: "100px",
+  // marginUp: "100px",
 };
 
 const connector = {
@@ -90,6 +99,7 @@ function XyloPhone(): JSX.Element {
           marginTop: "135px",
           marginBottom: "-110px",
           zIndex: 1,
+          boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
         }}
       />
       <div>

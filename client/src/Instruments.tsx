@@ -32,7 +32,7 @@ export class Instrument {
 
 function TopNav({ name }: { name: string }) {
   return (
-    <div className={"b fw8 w-100 h3 f2 bb b--light-gray bg-white flex justify-between items-center ph4"}>
+    <div className={"b fw8 w-100 h3 f2 bb b--light-gray white bg-dark-gray  flex justify-between items-center ph4 txt_shdw_bld shadow-6"}>
       <div>{name}</div>
     </div>
   );

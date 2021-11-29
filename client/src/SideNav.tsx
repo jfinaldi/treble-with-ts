@@ -25,7 +25,7 @@ interface SideNavProps {
 
 const Section: React.FC<{ title: string }> = ({ title, children }) => {
   return (
-    <div className="flex flex-column h-auto bb b--light-gray pa3">
+    <div className="flex flex-column h-auto bb b--light-gray pa3 txt_shdw_bld">
       <div className="fw7 mb2">{title} </div>
       <div className="flex-auto overflow-scroll">{children}</div>
     </div>
@@ -42,9 +42,9 @@ interface RadioButtonProps {
 function RadioButton({ to, text, active, onClick }: RadioButtonProps): JSX.Element {
   return (
     <Link to={to} className="no-underline">
-      <div className={classNames("f6 flex items-center black", { fw7: active })} onClick={onClick}>
-        {active ? <RadioButtonChecked20 className="mr1" /> : <RadioButton20 className="mr1" />}
-        <div className="dim">{text}</div>
+      <div className={classNames("f6 flex items-center light-silver txt_shdw_bld", { fw7: active })} onClick={onClick}>
+        {active ? <RadioButtonChecked20 className="mr1 near-white txt_shdw_bld" /> : <RadioButton20 className="mr1" />}
+        <div className="dim near-white txt_shdw_bld">{text}</div>
       </div>
     </Link>
   );
@@ -94,7 +94,7 @@ function Songs({ state, dispatch }: SideNavProps): JSX.Element {
       {songs.map((song) => (
         <div
           key={song.get("id")}
-          className="f6 pointer underline flex items-center no-underline i dim"
+          className="f6 pointer underline flex items-center no-underline i dim txt_shdw_bld"
           onClick={() => dispatch(new DispatchAction("PLAY_SONG", { id: song.get("id") }))}
         >
           <Music20 className="mr1" />
@@ -194,8 +194,10 @@ function Player({ state }: SideNavProps): JSX.Element {
 
 export function SideNav({ state, dispatch }: SideNavProps): JSX.Element {
   return (
-    <div className="absolute top-0 left-0 bottom-0 w5 z-1 shadow-1 bg-white flex flex-column">
-      <div className="h3 fw7 f5 flex items-center pl3 bb b--light-gray">Treble with TS</div>
+    // <div className="absolute top-0 left-0 bottom-0 w5 z-1 shadow-1 bg-white flex flex-column">
+    <div className="absolute top-0 left-0 bottom-0 w5 z-1 shadow-3 bg-mid-gray near-white flex flex-column">
+      {/* <div className="h3 fw7 f5 flex items-center pl3 bb b--light-gray">Treble with TS</div> */}
+      <div className="h3 fw7 f5 flex items-center pl3 bb b--silver txt_shdw_bld">Treble with TS</div>
       <div className="flex-auto">
         <Instruments state={state} dispatch={dispatch} />
         <Visualizers state={state} dispatch={dispatch} />

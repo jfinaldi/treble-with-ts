@@ -112,7 +112,8 @@ function CatPiano(): JSX.Element {
     /*Outer box for the purple background */
     // <div className={classNames('pv4 pl5 bg-light-purple')}>
     <div className={classNames('mt5 pv1 pl0')}>
-      <div className={classNames('relative ml5 pv1 h5 bg-light-purple w-65-ns br3 shadow-6')}>
+      {/* <div className={classNames('fixed ml5 pv1 h5 bg-light-purple w-37-ns br3 shadow-6')}> */}
+      <div className={classNames('absolute-m ml5 pv1 h5 bg-light-purple w9 br3 shadow-6')}>
         {/*Inner box for the actual keyboard */}
         <div className={classNames('relative flex mt5 ml4')}>  
           {Range(1, 2).map(keyboard =>
