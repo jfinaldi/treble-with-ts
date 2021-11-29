@@ -10,5 +10,5 @@ SELECT
 FROM songs s
 JOIN instruments i
     ON s.instrumentId = i.instrumentId
-WHERE s.name === ""
--- todo: change to dynamic searching
+WHERE s.name like ?
+LIMIT 1;

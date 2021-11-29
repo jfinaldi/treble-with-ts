@@ -145,9 +145,12 @@ app.listen(port, (err: any) => {
 //     fs.unlinkSync(path.join(__dirname, "..", "app.db"));
 //     await DB.initializeDB();
 //     console.log("init db now");
-//     let result = await DB.runQuery("get_all_songs");
-//     console.log("came here with: ", result);
-//     result = await DB.runQuery("get_random_songs");
+//     let result;
+//     // let result = await DB.runQuery("get_all_songs");
+//     // console.log("came here with: ", result);
+//     // result = await DB.runQuery("get_random_songs");
+//     // console.log("came here with: ", result);
+//     result = await DB.runQuery("search_songs", "Default", "Default", "Default", "Default");
 //     console.log("came here with: ", result);
 //   } catch (err) {
 //     console.log("ERROR HERE INSTEAD: ", err);
