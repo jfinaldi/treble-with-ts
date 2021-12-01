@@ -25,27 +25,28 @@ function Play(state: AppState, args: any, mode?: PlayMode, selection?: boolean):
   switch (mode) {
     case "play":
       var notes = "";
-      var instrument_type = "";
+      var instrument_type = 0;
       if (selection) {
         notes = state
           .get("songs")
-          .find((t: any) => t.get("songTitle") === args)
+          .find((t: any) => t.get("name") === args)
           .get("notes");
         instrument_type = state
           .get("songs")
-          .find((t: any) => t.get("songTitle") === args)
+          .find((t: any) => t.get("name") === args)
           .get("instrument");
       } else {
-        notes = state
-          .get("songs")
-          .find((s: any) => s.get("id") === args.get("id"))
-          .get("notes");
         instrument_type = state
           .get("songs")
-          .find((s: any) => s.get("id") === args.get("id"))
-          .get("instrument");
+          .find((s: any) => s.get("songId") === args.get("id"))
+          .get("instrumentId");
+        notes = state
+          .get("songs")
+          .find((s: any) => s.get("songId") === args.get("id"))
+          .get("notes");
       }
-      if (instrument_type === "drum") {
+      //drums
+      if (instrument_type === 1) {
         var drum_beats: string[] = notes.split(",");
         var _i: number = 500;
         for (let i of drum_beats) {
@@ -54,7 +55,8 @@ function Play(state: AppState, args: any, mode?: PlayMode, selection?: boolean):
         }
         return state.set("notes", "");
       }
-      if (instrument_type === "cat") {
+      //cat piano
+      if (instrument_type === 3) {
         var cat_notes: string[] = notes.split(",");
         var _i: number = 650;
         for (let i of cat_notes) {
@@ -62,10 +64,8 @@ function Play(state: AppState, args: any, mode?: PlayMode, selection?: boolean):
           _i += 650;
         }
         return state.set("notes", "");
-      } else {
-        console.log("piano not implemented");
-        return state.set("notes", notes);
       }
+      return state.set("notes", notes);
     case "pause":
       console.log("pause not implemented");
       return state.set("notes", "");

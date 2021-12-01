@@ -1,26 +1,82 @@
--- NOTE: I figured we'd want this for the section on SQL
 PRAGMA foreign_keys;
 
--- NOTE: For the SQL assignment, we could have them normalize
--- this database farther. Perhaps they can learn about SERIAL and
--- then go implement a way to change a room_name without losing
--- references by using a FOREIGN KEY into a rooms table with an 
--- int primary key.
-CREATE TABLE songs (
-	id int NOT NULL PRIMARY KEY,
-	song_title text NOT NULL,
-	notes varchar NOT NULL,
-	instrument varchar NOT NULL
+CREATE TABLE IF NOT EXISTS instruments (
+	instrumentId INTEGER PRIMARY KEY AUTOINCREMENT,
+	name VARCHAR(50),
+	madeBy VARCHAR(50)
 );
 
-INSERT INTO songs (id, song_title, notes, instrument) 
-VALUES (1, 'Ode to Joy (Dubstep Remix)', 'E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 E4 D4 D4','piano');
+CREATE TABLE IF NOT EXISTS songs (
+	songId INTEGER PRIMARY KEY AUTOINCREMENT,
+	author VARCHAR(50),
+	name VARCHAR(100),
+	createdOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	instrumentId INTEGER,
+	FOREIGN KEY (instrumentId) REFERENCES instruments(instrumentId) ON UPDATE CASCADE ON DELETE CASCADE
+);
 
-INSERT INTO songs (id, song_title, notes, instrument) 
-VALUES (2, 'Numb (Linkin Park)', '4,5,6,7,8','drum');
+CREATE TABLE IF NOT EXISTS notes (
+	noteId INTEGER PRIMARY KEY AUTOINCREMENT,
+	value VARCHAR(10),
+	position INTEGER,
+	songId INTEGER,
+	FOREIGN KEY (songId) REFERENCES songs(songId) ON UPDATE CASCADE ON DELETE CASCADE
+);
 
-INSERT INTO songs (id, song_title, notes, instrument) 
-VALUES (3, 'Mary Had A Little Lamb',
-	 '0.950,0.830,0.750,0.830,0.950,0.950,0.950,0.830,0.830,0.830,0.950,1.150,1.150,0.950,0.830,0.750,
-	  0.830,0.950,0.950,0.950,0.830,0.830,0.950,0.830,0.750',
-	 'cat');
+
+INSERT INTO instruments (instrumentId, name, madeBy) VALUES (1, 'Drums', 'Aaron');
+INSERT INTO instruments (instrumentId, name, madeBy) VALUES (2, 'Harp', 'Jainam');
+INSERT INTO instruments (instrumentId, name, madeBy) VALUES (3, 'Kitty Piano', 'Jennifer');
+INSERT INTO instruments (instrumentId, name, madeBy) VALUES (4, 'Xylophone', 'Himanshu');
+INSERT INTO instruments (instrumentId, name, madeBy) VALUES (5, 'Piano', 'Default');
+
+INSERT INTO songs (songId, author, name, instrumentId) VALUES (1, 'Default', 'Ode to Joy (Dubstep Remix)', 5);
+INSERT INTO notes (value, position, songId) VALUES ('E4', 1, 1);
+INSERT INTO notes (value, position, songId) VALUES ('E4', 2, 1);
+INSERT INTO notes (value, position, songId) VALUES ('F4', 3, 1);
+INSERT INTO notes (value, position, songId) VALUES ('G4', 4, 1);
+INSERT INTO notes (value, position, songId) VALUES ('G4', 5, 1);
+INSERT INTO notes (value, position, songId) VALUES ('F4', 6, 1);
+INSERT INTO notes (value, position, songId) VALUES ('E4', 7, 1);
+INSERT INTO notes (value, position, songId) VALUES ('D4', 8, 1);
+INSERT INTO notes (value, position, songId) VALUES ('C4', 9, 1);
+INSERT INTO notes (value, position, songId) VALUES ('C4', 10, 1);
+INSERT INTO notes (value, position, songId) VALUES ('D4', 11, 1);
+INSERT INTO notes (value, position, songId) VALUES ('E4', 12, 1);
+INSERT INTO notes (value, position, songId) VALUES ('E4', 13, 1);
+INSERT INTO notes (value, position, songId) VALUES ('D4', 14, 1);
+INSERT INTO notes (value, position, songId) VALUES ('D4', 15, 1);
+
+INSERT INTO songs (songId, author, name, instrumentId) VALUES (2, 'Default', 'Numb Linkon Park', 1);
+INSERT INTO notes (value, position, songId) VALUES ('4', 1, 2);
+INSERT INTO notes (value, position, songId) VALUES ('5', 2, 2);
+INSERT INTO notes (value, position, songId) VALUES ('6', 3, 2);
+INSERT INTO notes (value, position, songId) VALUES ('7', 4, 2);
+INSERT INTO notes (value, position, songId) VALUES ('8', 5, 2);
+
+INSERT INTO songs (songId, author, name, instrumentId) VALUES (3, 'Default', 'Mary Had A Little Lamb', 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.950', 1, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.830', 2, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.750', 3, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.830', 4, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.950', 5, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.950', 6, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.950', 7, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.830', 8, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.830', 9, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.830', 10, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.950', 11, 3);
+INSERT INTO notes (value, position, songId) VALUES ('1.150', 12, 3);
+INSERT INTO notes (value, position, songId) VALUES ('1.150', 13, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.950', 1, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.830', 2, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.750', 3, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.830', 4, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.950', 5, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.950', 6, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.950', 7, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.830', 8, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.830', 9, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.950', 11, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.830', 9, 3);
+INSERT INTO notes (value, position, songId) VALUES ('0.750', 9, 3);

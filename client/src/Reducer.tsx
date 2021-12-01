@@ -24,6 +24,7 @@ type DispatchArgs = {
 };
 
 // A simple algebraic data-type with string literal types
+// A simple algebraic data-type with string literal types
 type DispatchActionType =
   | "SET_SOCKET"
   | "DELETE_SOCKET"
@@ -33,7 +34,8 @@ type DispatchActionType =
   | "SET_LOCATION"
   | "TOGGLE_RECORDING"
   | "ADD_NOTE"
-  | "CLEAR_NOTES";
+  | "CLEAR_NOTES"
+  | "RECORD_COMPLETE";
 
 export class DispatchAction {
   readonly type: DispatchActionType;
@@ -79,32 +81,31 @@ export function appReducer(state: AppState, action: DispatchAction): AppState {
         const search = args.getIn(["location", "search"], "") as string;
 
         const instrumentName: string = pathname.substring(1);
-        const visualizerName: string =
-          new URLSearchParams(search.substring(1)).get("visualizer") ?? "";
+        const visualizerName: string = new URLSearchParams(search.substring(1)).get("visualizer") ?? "";
         const instruments: List<Instrument> = state.get("instruments");
         const visualizers: List<Visualizer> = state.get("visualizers");
 
         const instrument = instruments.find((i) => i.name === instrumentName);
         const visualizer = visualizers.find((v) => v.name === visualizerName);
 
-        return state
-          .set("instrument", instrument)
-          .set("visualizer", visualizer);
+        return state.set("instrument", instrument).set("visualizer", visualizer);
       }
       case "TOGGLE_RECORDING": {
         const surrentVal = state.get("isRecording");
         return state.set("isRecording", !surrentVal);
       }
+      case "RECORD_COMPLETE": {
+        return state.set("isComplete", !state.get("isComplete"));
+        // return state.set("isComplete", !state.get("isComplete"));
+      }
       case "ADD_NOTE": {
         const currentRecordedNotes = state.get("recordedNotes");
-        return state.set("recordedNotes", [
-          ...currentRecordedNotes,
-          args.get("note"),
-        ]);
+        return state.set("recordedNotes", [...currentRecordedNotes, args.get("note")]);
       }
       case "CLEAR_NOTES": {
         return state.set("recordedNotes", []);
       }
+
       default:
         console.error(`type unknown: ${type}\n`, args.toJS());
         return state;

@@ -24,24 +24,12 @@ import { FancyVisualizer } from "./visualizers/xo28122000";
  * 'visualizer': Visualizer
  */
 export type AppState = Map<string, any>;
-const instruments = List([
-  PianoInstrument,
-  HarpInstrument,
-  _Drums,
-  _Cat,
-  _Xylophone,
-]);
-const visualizers = List([
-  WaveformVisualizer,
-  RippleVisualizer,
-  CatVisualizer,
-  RockVisualizer,
-  FancyVisualizer,
-]);
+const instruments = List([PianoInstrument, HarpInstrument, _Drums, _Cat, _Xylophone]);
+const visualizers = List([WaveformVisualizer, RippleVisualizer, CatVisualizer, RockVisualizer, FancyVisualizer]);
 export const defaultState: AppState = Map<string, any>({
   instruments,
   visualizers,
+  isComplete: false,
   isRecording: false,
   recordedNotes: [],
-  // currentRecorderInfo: { author: "", nameOfSong: "", instrument: "" },
 });
