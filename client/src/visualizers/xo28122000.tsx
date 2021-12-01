@@ -29,8 +29,13 @@ export const FancyVisualizer = new Visualizer(
       .filter((val) => val < 0)
       .map((val) => val * -1);
     const positiveValues = values.filter((val) => val > 0);
-    addNewDots(negativeValues, currentDotsTowardsRight, "RIGHT");
-    addNewDots(positiveValues, currentDotsTowardsLeft, "LEFT", width);
+    const rowColor = [
+      Math.random() * 255,
+      Math.random() * 255,
+      Math.random() * 255,
+    ];
+    addNewDots(negativeValues, currentDotsTowardsRight, "RIGHT", rowColor);
+    addNewDots(positiveValues, currentDotsTowardsLeft, "LEFT", rowColor, width);
     moveDots(p5, "RIGHT", width);
     moveDots(p5, "LEFT", width);
   }
@@ -60,6 +65,7 @@ const addNewDots = (
   values: number[],
   currentDots: Set<any>,
   movement: "RIGHT" | "LEFT",
+  rowColor: number[],
   width?: number,
   height?: number
 ) => {
@@ -76,9 +82,7 @@ const addNewDots = (
       JSON.stringify([
         scaledValues[i],
         movement === "RIGHT" ? 0 : width ?? window.innerWidth,
-        Math.random() * 255,
-        Math.random() * 255,
-        Math.random() * 255,
+        ...rowColor,
       ])
     );
   }
