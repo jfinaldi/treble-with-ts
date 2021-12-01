@@ -111,7 +111,17 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
   const [songs, setSongs] = useState(["Empty"]);
   const [selected, setSelected] = useState("");
   const [notes, setNotes] = useState("");
+  const [artist, setArtist] = useState("");
+  const [songName, setSongName] = useState("");
+  // const on_Click = ()=>{
+  //   const postRequest = {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ recordedNotes: recordedNotes }),
+  //   };
+  // }
   useEffect(() => {
+    console.log("FIRE NOW");
     const recordedNotes = JSON.parse(JSON.stringify(state.get("recordedNotes")));
     setNotes(recordedNotes);
     dispatch(new DispatchAction("CLEAR_NOTES"));
@@ -132,7 +142,6 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
              value="show" 
              onClick={() => visible = !visible }
       /> */}
-      {notes}
       <Section title="Jukebox">
         {visible ? (
           <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl0 pr0 pb3 pt1 dib-ns")}>
@@ -179,7 +188,23 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
 
             <div className={classNames("ml0-ns pl2")}>
               <form action="http://www.google.com">
-                <input className={classNames("tc ml2-ns br2-m f5-m tc-l w-90 mt1-ns")} id="text" type="text" name="new_song_title" placeholder="Name Your Song" />
+                <input
+                  className={classNames("tc ml2-ns br2-m f5-m tc-l w-90 mt1-ns")}
+                  id="text"
+                  type="text"
+                  name="new_song_title"
+                  placeholder="Name Your Song"
+                  onChange={(e) => setSongName(e.target.value)}
+                />
+                <input
+                  className={classNames("tc ml2-ns br2-m f5-m tc-l w-90 mt1-ns")}
+                  id="text"
+                  type="text"
+                  name="new_song_artist"
+                  placeholder="Your Name Here"
+                  onChange={(e) => setArtist(e.target.value)}
+                />
+
                 <input
                   className={classNames("ml2-ns txt_shdw_blk bg-light-blue dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--blue br3 white w-90-ns f5 tc-ns mt1-ns")}
                   id="submit"

@@ -100,6 +100,8 @@ export function appReducer(state: AppState, action: DispatchAction): AppState {
       }
       case "ADD_NOTE": {
         const currentRecordedNotes = state.get("recordedNotes");
+        console.log("here");
+        console.log([...currentRecordedNotes, args.get("note")]);
         return state.set("recordedNotes", [...currentRecordedNotes, args.get("note")]);
       }
       case "CLEAR_NOTES": {
