@@ -34,19 +34,24 @@ function Drums({ state, dispatch }: InstrumentProps): JSX.Element {
     if (!isRecording && recordedNotes.length > 0) dispatch(new DispatchAction("RECORD_COMPLETE"));
   }, [isRecording]);
   return (
-    <div className={classNames("pt4")}>
-      <div className={classNames("h-inherit br4 pb2 bg-light-blue w-75 justify-between shadow-6 center ")}>
+    <div className={classNames("pt3")}>
+      <div className={classNames("h-inherit br4 pb2 bg-light-blue wfc justify-between shadow-6 center")}>
         {" "}
-        <div className="drum_container">
-          <img src={Top_Left} alt="a" style={{ height: 150, width: 125, transform: "rotate(20deg)" }} onClick={() => drum_boom(10)} />
-          <img src={Top_Left} alt="e" style={{ height: 150, width: 125, transform: "rotate(0deg)" }} onClick={() => drum_boom(8)} />
-          <img src={Top_Left} alt="c" style={{ height: 150, width: 125, transform: "rotate(-20deg)" }} onClick={() => drum_boom(6)} />
-          <img src={Mini_Boom} alt="d" style={{ height: 105, width: 120, marginTop: -28,transform: "rotate(20deg)" }} onClick={() => drum_boom(5)} />
-          <img src={Mini_Boom} alt="b" style={{ height: 130, width: 150, marginTop: -28, marginLeft: -10, transform: "rotate(0)" }} onClick={() => drum_boom(12)} />
-          <img src={Mini_Boom} alt="f" style={{ height: 105, width: 120, marginTop: -28, marginLeft: 5, transform: "rotate(-20deg)" }} onClick={() => drum_boom(4)} />
-          <img src={smn} alt="g" style={{ height: 150, width: 150, marginLeft: -20, transform: "rotate(0deg)" }} onClick={() => drum_boom(11)} />
-          <img src={Bass} alt="k" style={{ height: 150, width: 150, marginLeft: -15, }} onClick={() => drum_boom(7)} />
-          <img src={smn} alt="m" style={{ height: 150, width: 150, marginLeft: -5, transform: "rotate(0deg)" }} onClick={() => drum_boom(9)} />
+        <div className="grid-container absolute-m">
+          <div className="grid-item pt3">
+            <img src={Top_Left} alt="a" style={{ height: 105, width: 125, marginTop: -10,transform: "rotate(20deg)" }} onClick={() => drum_boom(10)} />
+            <img src={Mini_Boom} alt="d" style={{ height: 105, width: 120, marginTop: -10,transform: "rotate(20deg)" }} onClick={() => drum_boom(5)} />
+            <img src={Mini_Boom} alt="e" style={{ height: 130, width: 150, marginTop: -10, marginLeft: -5, transform: "rotate(0)" }} onClick={() => drum_boom(12)} />
+            <img src={Mini_Boom} alt="f" style={{ height: 105, width: 120, marginTop: -10, marginLeft: -1, transform: "rotate(-20deg)" }} onClick={() => drum_boom(4)} />
+            <img src={Top_Left} alt="c" style={{ height: 105, width: 125, marginTop: -10,transform: "rotate(-20deg)" }} onClick={() => drum_boom(6)} />
+          </div>
+          <div className="grid-item pt3">
+            <img src={Top_Left} alt="b" style={{ height: 150, width: 125, transform: "rotate(20deg)" }} onClick={() => drum_boom(8)} />
+            <img src={smn} alt="g" style={{ height: 150, width: 150, marginLeft: -20, transform: "rotate(0deg)" }} onClick={() => drum_boom(11)} />
+            <img src={Bass} alt="h" style={{ height: 150, width: 150, marginLeft: -15, }} onClick={() => drum_boom(7)} />
+            <img src={smn} alt="i" style={{ height: 150, width: 150, marginLeft: -5, transform: "rotate(0deg)" }} onClick={() => drum_boom(9)} />
+            <img src={Top_Left} alt="c" style={{ height: 150, width: 125, marginLeft: -20, transform: "rotate(-20deg)" }} onClick={() => drum_boom(6)} />
+          </div>
         </div>
       </div>
     </div>

@@ -3362,6 +3362,8 @@
 	.mt0 { margin-top: 0; }
 	.t-50 { top: 50%; }
 	.center-v { margin-top: auto; margin-bottom: auto; }
- }
+	.grid-item { grid-column: auto;}
+	.wfc { width: fit-content; }
+}
  
  
