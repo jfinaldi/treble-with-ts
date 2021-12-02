@@ -3356,6 +3356,7 @@
 	.bsblk { border: solid-black; }
 	.txt_shdw_blk { text-shadow: 1px 1px 1px #070606; }
 	.txt_shdw_bld { text-shadow: 2px 2px #070606; }
+	.txt_shdw_none { text-shadow: none; }
 	.maa { margin: auto; }
 	.mta { margin-top: auto; }
 	.mt0 { margin-top: 0; }

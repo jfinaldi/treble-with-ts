@@ -138,7 +138,7 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
   return (
     <div>
       <Section title="Jukebox">
-          <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl0 pr0 pb3 pt1 dib-ns")}>
+          <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl0 pr0 pb3 pt1 dib-ns txt_shdw_none")}>
             <Combobox hideCaret hideEmptyPopup placeholder="Search Song by Title" data={songs} value={selected} onChange={(nextValue) => setSelected(nextValue)} />
             <div className={classNames("tc-ns f8-ns pt1 pb1 pl2-m pr2-m black")} id="song_title">
               {selected}
