@@ -106,7 +106,6 @@ function Songs({ state, dispatch }: SideNavProps): JSX.Element {
 }
 
 function Player({ state, dispatch }: SideNavProps): JSX.Element {
-  let visible: boolean = true;
   const isComplete = state.get("isComplete");
   const [songs, setSongs] = useState(["Empty"]);
   const [selected, setSelected] = useState("");
@@ -138,12 +137,7 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
   }, [state]);
   return (
     <div>
-      {/* <input type="button" 
-             value="show" 
-             onClick={() => visible = !visible }
-      /> */}
       <Section title="Jukebox">
-        {visible ? (
           <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl0 pr0 pb3 pt1 dib-ns")}>
             <Combobox hideCaret hideEmptyPopup placeholder="Search Song by Title" data={songs} value={selected} onChange={(nextValue) => setSelected(nextValue)} />
             <div className={classNames("tc-ns f8-ns pt1 pb1 pl2-m pr2-m black")} id="song_title">
@@ -177,7 +171,7 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
                 }}
               ></input>
               <input 
-                className={classNames("mt1-ns br3 ml00-ns ")} 
+                className={classNames("mt1-ns br3 ml00-ns")} 
                 id="reset" 
                 type="button" 
                 value="Reset Song"
@@ -212,7 +206,6 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
               </form>
             </div>
           </div>
-        ) : null}
       </Section>
     </div>
   );
