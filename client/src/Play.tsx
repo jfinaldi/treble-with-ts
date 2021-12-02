@@ -1,6 +1,6 @@
 import * as Tone from "tone";
 import { AppState } from "./State";
-type PlayMode = "play" | "pause" | "stop";
+type PlayMode = "play" | "stop";
 const sleep = (milliseconds: any) => new Promise((resolve) => setTimeout(resolve, milliseconds));
 const drum_boom = async (type_beat: number, time_delay: number) => {
   await sleep(time_delay);
@@ -21,31 +21,34 @@ const cat_meow = async (noteb: number, time_delay: number) => {
   beat.playbackRate = noteb;
   beat.autostart = true;
 };
-function Play(state: AppState, args: any, mode?: PlayMode, selection?: boolean): AppState {
+function Play(state: AppState, args: any, mode?: PlayMode): AppState {
   switch (mode) {
     case "play":
-      var notes = "";
-      var instrument_type = 0;
-      if (selection) {
+      var notes: string = "";
+      var instrument_type: number = 0;
+      try {
+        //FROM PLAYLIST IN SIDENAV
+        var id: number = 0;
+        if (typeof args === "number") id = args;
+        else id = args.get("id");
         notes = state
           .get("songs")
-          .find((t: any) => t.get("name") === args)
+          .find((s: any) => s.get("songId") === id)
           .get("notes");
         instrument_type = state
           .get("songs")
-          .find((t: any) => t.get("name") === args)
-          .get("instrument");
-      } else {
-        instrument_type = state
-          .get("songs")
-          .find((s: any) => s.get("songId") === args.get("id"))
+          .find((s: any) => s.get("songId") === id)
           .get("instrumentId");
-        notes = state
-          .get("songs")
-          .find((s: any) => s.get("songId") === args.get("id"))
-          .get("notes");
+      } catch (e) {
+        //INVALID INPUT FAILED, CATCH .FIND() UNDEFINED ERROR
+        return state.set("notes", "");
       }
-      //drums
+      //PIANO
+      if (instrument_type === 5) {
+        console.log("shoudd change state");
+        return state.set("notes", notes.replace(/,/g, "\xa0"));
+      }
+      //DRUMS
       if (instrument_type === 1) {
         var drum_beats: string[] = notes.split(",");
         var _i: number = 500;
@@ -53,9 +56,8 @@ function Play(state: AppState, args: any, mode?: PlayMode, selection?: boolean):
           drum_boom(parseInt(i), _i);
           _i += 500;
         }
-        return state.set("notes", "");
       }
-      //cat piano
+      //CAT PIANO
       if (instrument_type === 3) {
         var cat_notes: string[] = notes.split(",");
         var _i: number = 650;
@@ -63,11 +65,7 @@ function Play(state: AppState, args: any, mode?: PlayMode, selection?: boolean):
           cat_meow(parseFloat(i), _i);
           _i += 650;
         }
-        return state.set("notes", "");
       }
-      return state.set("notes", notes);
-    case "pause":
-      console.log("pause not implemented");
       return state.set("notes", "");
     case "stop":
       console.log("stop not implemented");
