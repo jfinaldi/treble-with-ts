@@ -6,24 +6,33 @@ const drum_boom = async (type_beat: number, time_delay: number) => {
   await sleep(time_delay);
   let rsp_url = "http://localhost:5005/drums/?type_beat=" + type_beat;
   let rsp_data = await fetch(rsp_url);
-  let rsp_json = await rsp_data.json();
-  let audioSrc = "data:audo/wav;base64," + rsp_json.fileContent;
-  let beat = new Tone.Player(audioSrc).toDestination();
-  beat.autostart = true;
+  let statusCheck = await fetch("http://localhost:5005/StatusStop");
+  let status = await statusCheck.json();
+  if (!status.status) {
+    let rsp_json = await rsp_data.json();
+    let audioSrc = "data:audo/wav;base64," + rsp_json.fileContent;
+    let beat = new Tone.Player(audioSrc).toDestination();
+    beat.autostart = true;
+  }
 };
 const cat_meow = async (noteb: number, time_delay: number) => {
   await sleep(time_delay);
   let rsp_url = "http://localhost:5005/three";
   let rsp_data = await fetch(rsp_url);
   let rsp_json = await rsp_data.json();
-  let audioSrc = "data:audo/wav;base64," + rsp_json.fileContent;
-  let beat = new Tone.Player(audioSrc).toDestination();
-  beat.playbackRate = noteb;
-  beat.autostart = true;
+  let statusCheck = await fetch("http://localhost:5005/StatusStop");
+  let status = await statusCheck.json();
+  if (!status.status) {
+    let audioSrc = "data:audo/wav;base64," + rsp_json.fileContent;
+    let beat = new Tone.Player(audioSrc).toDestination();
+    beat.playbackRate = noteb;
+    beat.autostart = true;
+  }
 };
 function Play(state: AppState, args: any, mode?: PlayMode): AppState {
   switch (mode) {
     case "play":
+      fetch("http://localhost:5005/SetStop/?Status=" + "F");
       var notes: string = "";
       var instrument_type: number = 0;
       try {
@@ -68,7 +77,6 @@ function Play(state: AppState, args: any, mode?: PlayMode): AppState {
       }
       return state.set("notes", "");
     case "stop":
-      console.log("stop not implemented");
       return state.set("notes", "");
     default: {
       return state.set("notes", "");

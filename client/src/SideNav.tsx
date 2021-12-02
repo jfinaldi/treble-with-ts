@@ -112,6 +112,7 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
   const [notes, setNotes] = useState("");
   const [artist, setArtist] = useState("");
   const [songName, setSongName] = useState("");
+  const setStop = () => fetch("http://localhost:5005/SetStop/?Status=" + "T");
   const submitForm = () => {
     const postRequest = {
       method: "POST",
@@ -155,7 +156,8 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
               id="stop"
               type="button"
               value="Stop"
-              onClick={() => Play(state, selected, "stop")}
+              // onClick={() => Play(state, selected, "stop")}
+              onClick={() => setStop()}
             ></input>
           </div>
 
@@ -188,7 +190,7 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
                 id="text"
                 type="text"
                 name="new_song_artist"
-                placeholder="Your Name Here"
+                placeholder="Artist Name Here"
                 onChange={(e) => setArtist(e.target.value)}
               />
 
