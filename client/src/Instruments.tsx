@@ -56,7 +56,7 @@ export const InstrumentContainer: React.FC<InstrumentContainerProps> = ({ instru
 
   useEffect(() => {
     if (notes && synth) {
-      let eachNote = notes.split(" ");
+      let eachNote = notes.split("\xa0");
       let noteObjs = eachNote.map((note: string, idx: number) => ({
         idx,
         time: `+${idx / 4}`,

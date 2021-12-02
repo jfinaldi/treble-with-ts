@@ -112,25 +112,18 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
   const [notes, setNotes] = useState("");
   const [artist, setArtist] = useState("");
   const [songName, setSongName] = useState("");
-  // const on_Click = ()=>{
-  //   const postRequest = {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ recordedNotes: recordedNotes }),
-  //   };
-  // }
-  useEffect(() => {
-    console.log("FIRE NOW");
-    const recordedNotes = JSON.parse(JSON.stringify(state.get("recordedNotes")));
-    setNotes(recordedNotes);
-    dispatch(new DispatchAction("CLEAR_NOTES"));
+  const submitForm = () => {
     const postRequest = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ recordedNotes: recordedNotes }),
+      body: JSON.stringify({ recordedNotes: notes, songName: songName, artist: artist }),
     };
-    // connected to backend & then fetch('backend',postRequest)
-    console.log("recorded notes", recordedNotes);
+    console.log("JSON", postRequest);
+  };
+  useEffect(() => {
+    const recordedNotes = JSON.parse(JSON.stringify(state.get("recordedNotes")));
+    setNotes(recordedNotes);
+    dispatch(new DispatchAction("CLEAR_NOTES"));
   }, [isComplete]);
   useEffect(() => {
     setSongs(state.get("songs", List()).reduce((acc: any, song: any) => acc.concat([song.get("name")]), [] as any[]));
@@ -138,74 +131,76 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
   return (
     <div>
       <Section title="Jukebox">
-          <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl0 pr0 pb3 pt1 dib-ns txt_shdw_none")}>
-            <Combobox hideCaret hideEmptyPopup placeholder="Search Song by Title" data={songs} value={selected} onChange={(nextValue) => setSelected(nextValue)} />
-            <div className={classNames("tc-ns f8-ns pt1 pb1 pl2-m pr2-m black")} id="song_title">
-              {selected}
-            </div>
-            <div className={classNames("ml3-ns pl1")}>
-              <input
-                className={classNames("w-45 h2 mr1-ns b-m green bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
-                id="play"
-                type="button"
-                value="Play"
-                onClick={() => Play(state, selected, "play", true)}
-              ></input>
-              <input
-                className={classNames("w-45 h2 b-m red bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
-                id="stop"
-                type="button"
-                value="Stop"
-                onClick={() => Play(state, selected, "stop")}
-              ></input>
-            </div>
-
-            <div className={classNames("ml2-ns pl2")}>
-              <input
-                className={classNames("ml1-ns mt1-ns mr1-ns w-40 br3")}
-                id="record"
-                type="button"
-                value={state.get("isRecording") ? "Stop Recording" : "Record"}
-                onClick={() => {
-                  dispatch(new DispatchAction("TOGGLE_RECORDING"));
-                }}
-              ></input>
-              <input 
-                className={classNames("mt1-ns br3 ml00-ns")} 
-                id="reset" 
-                type="button" 
-                value="Reset Song"
-              ></input>
-            </div>
-
-            <div className={classNames("ml0-ns pl2")}>
-              <form action="http://www.google.com">
-                <input
-                  className={classNames("tc ml2-ns br2-m f5-m tc-l w-90 mt1-ns")}
-                  id="text"
-                  type="text"
-                  name="new_song_title"
-                  placeholder="Name Your Song"
-                  onChange={(e) => setSongName(e.target.value)}
-                />
-                <input
-                  className={classNames("tc ml2-ns br2-m f5-m tc-l w-90 mt1-ns")}
-                  id="text"
-                  type="text"
-                  name="new_song_artist"
-                  placeholder="Your Name Here"
-                  onChange={(e) => setArtist(e.target.value)}
-                />
-
-                <input
-                  className={classNames("ml2-ns txt_shdw_blk bg-light-blue dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--blue br3 white w-90-ns f5 tc-ns mt1-ns")}
-                  id="submit"
-                  type="button"
-                  value="submit"
-                ></input>
-              </form>
-            </div>
+        <div className={classNames("pt2 shadow-6 ba bsblk bg-moon-gray pl0 pr0 pb3 pt1 dib-ns")}>
+          <Combobox hideCaret hideEmptyPopup placeholder="Search Song by Title" data={songs} value={selected} onChange={(nextValue) => setSelected(nextValue)} />
+          <div className={classNames("tc-ns f8-ns pt1 pb1 pl2-m pr2-m black")} id="song_title">
+            {selected}
           </div>
+          <div className={classNames("ml3-ns pl1")}>
+            <input
+              className={classNames("w-45 h2 mr1-ns b-m green bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
+              id="play"
+              type="button"
+              value="Play"
+              onClick={() => {
+                const getId = state
+                  .get("songs")
+                  .find((t: any) => t.get("name") === selected)
+                  .get("songId");
+                dispatch(new DispatchAction("PLAY_SONG", getId));
+              }}
+            ></input>
+            <input
+              className={classNames("w-45 h2 b-m red bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
+              id="stop"
+              type="button"
+              value="Stop"
+              onClick={() => Play(state, selected, "stop")}
+            ></input>
+          </div>
+
+          <div className={classNames("ml2-ns pl2")}>
+            <input
+              className={classNames("ml1-ns mt1-ns mr1-ns w-40 br3")}
+              id="record"
+              type="button"
+              value={state.get("isRecording") ? "Stop Recording" : "Record"}
+              onClick={() => {
+                dispatch(new DispatchAction("TOGGLE_RECORDING"));
+              }}
+            ></input>
+            <input className={classNames("mt1-ns br3 ml00-ns")} id="reset" type="button" value="Reset Song"></input>
+          </div>
+
+          <div className={classNames("ml0-ns pl2")}>
+            <form action="http://www.google.com">
+              <input
+                className={classNames("tc ml2-ns br2-m f5-m tc-l w-90 mt1-ns")}
+                id="text"
+                type="text"
+                name="new_song_title"
+                placeholder="Name Your Song"
+                onChange={(e) => setSongName(e.target.value)}
+              />
+              <input
+                className={classNames("tc ml2-ns br2-m f5-m tc-l w-90 mt1-ns")}
+                id="text"
+                type="text"
+                name="new_song_artist"
+                placeholder="Your Name Here"
+                onChange={(e) => setArtist(e.target.value)}
+              />
+
+              <input
+                className={classNames("ml2-ns txt_shdw_blk bg-light-blue dib-ns pl00-ns pr00-ns pt00-ns pb00-ns b--blue br3 white w-90-ns f5 tc-ns mt1-ns")}
+                id="submit"
+                type="button"
+                value="submit"
+                onClick={() => submitForm()}
+              ></input>
+            </form>
+          </div>
+        </div>
       </Section>
     </div>
   );
