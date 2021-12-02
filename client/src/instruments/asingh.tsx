@@ -43,10 +43,10 @@ function Drums({ state, dispatch }: InstrumentProps): JSX.Element {
             <img src={Mini_Boom} alt="d" style={{ height: 105, width: 120, marginTop: -10,transform: "rotate(20deg)" }} onClick={() => drum_boom(5)} />
             <img src={Mini_Boom} alt="e" style={{ height: 130, width: 150, marginTop: -10, marginLeft: -5, transform: "rotate(0)" }} onClick={() => drum_boom(12)} />
             <img src={Mini_Boom} alt="f" style={{ height: 105, width: 120, marginTop: -10, marginLeft: -1, transform: "rotate(-20deg)" }} onClick={() => drum_boom(4)} />
-            <img src={Top_Left} alt="c" style={{ height: 105, width: 125, marginTop: -10,transform: "rotate(-20deg)" }} onClick={() => drum_boom(6)} />
+            <img src={Top_Left} alt="c" style={{ height: 105, width: 125, marginTop: -10,transform: "rotate(-20deg)" }} onClick={() => drum_boom(8)} />
           </div>
           <div className="grid-item pt3">
-            <img src={Top_Left} alt="b" style={{ height: 150, width: 125, transform: "rotate(20deg)" }} onClick={() => drum_boom(8)} />
+            <img src={Top_Left} alt="b" style={{ height: 150, width: 125, transform: "rotate(20deg)" }} onClick={() => drum_boom(6)} />
             <img src={smn} alt="g" style={{ height: 150, width: 150, marginLeft: -20, transform: "rotate(0deg)" }} onClick={() => drum_boom(11)} />
             <img src={Bass} alt="h" style={{ height: 150, width: 150, marginLeft: -15, }} onClick={() => drum_boom(7)} />
             <img src={smn} alt="i" style={{ height: 150, width: 150, marginLeft: -5, transform: "rotate(0deg)" }} onClick={() => drum_boom(9)} />
