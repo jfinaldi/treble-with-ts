@@ -1,5 +1,5 @@
 import * as Tone from "tone";
-import react, { useEffect } from "react";
+import { useEffect } from "react";
 import { List, Range } from "immutable";
 import classNames from "classnames";
 import BK from "../img/blackKey_a.svg";
@@ -7,7 +7,7 @@ import WK from "../img/whiteKey_a.png";
 import { DispatchAction } from "../Reducer";
 import { Instrument, InstrumentProps } from "../Instruments";
 import { AppState } from "../State";
-import { stat } from "fs";
+
 interface CatKeyProps {
   noteb: number;
   player?: Tone.Player; // Contains library code for making sound
@@ -24,19 +24,16 @@ export function CatKey({
   player,
   isFlat,
   index,
-  state,
   dispatch,
   isRecording,
   recordedNotes,
 }: CatKeyProps): JSX.Element {
-  // our function to play a cat meow note
-  // const isRecording = state.get("isRecording");
-  // const recordedNotes = state.get("recordedNotes");
-
+  
   useEffect(() => {
     if (!isRecording && recordedNotes.length > 0) dispatch(new DispatchAction("RECORD_COMPLETE"));
   }, [isRecording]);
 
+  // our function to play a cat meow note 
   const cat_meow = () => {
     try {
       fetch("http://localhost:5005/three")
@@ -64,8 +61,7 @@ export function CatKey({
         style={{
           left: `${index * 2 + 0.1}rem`,
         }}
-        className="absolute top--2-ns z-1 w3 ml1"
-      >
+        className="absolute top--2-ns z-1 w3 ml1">
         <img src={BK} alt="BK" height="110"></img>
       </div>
     );
@@ -78,8 +74,7 @@ export function CatKey({
         style={{
           left: `${index * 2}rem`,
         }}
-        className="absolute top-0 z-0 w2 ml1"
-      >
+        className="absolute top-0 z-0 w2 ml1">
         <img src={WK} alt="WK" height="150"></img>
       </div>
     );
@@ -135,9 +130,7 @@ function CatPiano({ state, dispatch }: InstrumentProps): JSX.Element {
 
   return (
     /*Outer box for the purple background */
-    // <div className={classNames('pv4 pl5 bg-light-purple')}>
     <div className={classNames("mt5 pv1 pl0")}>
-      {/* <div className={classNames('fixed ml5 pv1 h5 bg-light-purple w-37-ns br3 shadow-6')}> */}
       <div className={classNames("absolute-m ml5 pv1 h5 bg-light-purple w9 br3 shadow-6")}>
         {/*Inner box for the actual keyboard */}
         <div className={classNames("relative flex mt5 ml4")}>

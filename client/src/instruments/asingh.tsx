@@ -37,7 +37,7 @@ function Drums({ state, dispatch }: InstrumentProps): JSX.Element {
     <div className={classNames("pt3")}>
       <div className={classNames("h-inherit br4 pb2 bg-light-blue wfc justify-between shadow-6 center")}>
         {" "}
-        <div className="grid-container absolute-m">
+        <div className="grid-container absolute-m" id="drum_container">
           <div className="grid-item pt3">
             <img src={Top_Left} alt="a" style={{ height: 105, width: 125, marginTop: -10,transform: "rotate(20deg)" }} onClick={() => drum_boom(10)} />
             <img src={Mini_Boom} alt="d" style={{ height: 105, width: 120, marginTop: -10,transform: "rotate(20deg)" }} onClick={() => drum_boom(5)} />

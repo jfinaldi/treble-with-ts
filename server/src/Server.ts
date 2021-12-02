@@ -3,7 +3,6 @@ import { DB } from "./Database";
 import http from "http";
 import { MessageHandler } from "./MessageHandler";
 import { GetSongHandler, GetAllSongsHandler, GetRandomSongsHandler, SearchSongsHandler, InsertSongHandler, DeleteSongHandler } from "./handlers";
-import { resolveObjectURL } from "buffer";
 
 const PORT = 3001;
 const VALID_ORIGINS = ["http://localhost:3000"];
