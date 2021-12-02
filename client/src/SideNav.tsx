@@ -151,21 +151,14 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
             </div>
             <div className={classNames("ml3-ns pl1")}>
               <input
-                className={classNames("h2 mr1-ns b-m green bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
+                className={classNames("w-45 h2 mr1-ns b-m green bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
                 id="play"
                 type="button"
                 value="Play"
                 onClick={() => Play(state, selected, "play", true)}
               ></input>
               <input
-                className={classNames("h2 mr1-ns b-m black bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
-                id="pause"
-                type="button"
-                value="Pause"
-                onClick={() => Play(state, selected, "pause")}
-              ></input>
-              <input
-                className={classNames("h2 b-m red bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 tc no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
+                className={classNames("w-45 h2 b-m red bg-white-60 bsblk br3 pl2 pr2 pt1 pb3 no-underline dib-ns f5-ns mt00-m mb00-m ml00-m mr00-m pointer:hover")}
                 id="stop"
                 type="button"
                 value="Stop"
@@ -175,7 +168,7 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
 
             <div className={classNames("ml2-ns pl2")}>
               <input
-                className={classNames("ml1-ns mt1-ns mr1-ns br3")}
+                className={classNames("ml1-ns mt1-ns mr1-ns w-40 br3")}
                 id="record"
                 type="button"
                 value={state.get("isRecording") ? "Stop Recording" : "Record"}
@@ -183,7 +176,12 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
                   dispatch(new DispatchAction("TOGGLE_RECORDING"));
                 }}
               ></input>
-              <input className={classNames("mt1-ns br3 ml1-ns")} id="reset" type="button" value="Reset Song"></input>
+              <input 
+                className={classNames("mt1-ns br3 ml00-ns ")} 
+                id="reset" 
+                type="button" 
+                value="Reset Song"
+              ></input>
             </div>
 
             <div className={classNames("ml0-ns pl2")}>
