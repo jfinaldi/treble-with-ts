@@ -164,7 +164,8 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
               className={classNames("ml1-ns mt1-ns mr1-ns w-40 br3")}
               id="record"
               type="button"
-              value={state.get("isRecording") ? "Stop Recording" : "Record"}
+              style={{ backgroundColor: state.get("isRecording") ? "pink" : ""}}
+              value={state.get("isRecording") ? "EndSong" : "Record"}
               onClick={() => {
                 dispatch(new DispatchAction("TOGGLE_RECORDING"));
               }}
