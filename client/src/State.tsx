@@ -29,6 +29,7 @@ const visualizers = List([WaveformVisualizer, RippleVisualizer, FancyVisualizer,
 export const defaultState: AppState = Map<string, any>({
   instruments,
   visualizers,
+  activeInstrument: "",
   isComplete: false,
   isRecording: false,
   recordedNotes: [],

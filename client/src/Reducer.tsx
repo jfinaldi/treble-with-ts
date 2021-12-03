@@ -35,6 +35,7 @@ type DispatchActionType =
   | "TOGGLE_RECORDING"
   | "ADD_NOTE"
   | "CLEAR_NOTES"
+  | "SET_INSTRUMENT"
   | "RECORD_COMPLETE";
 
 export class DispatchAction {
@@ -70,6 +71,9 @@ export function appReducer(state: AppState, action: DispatchAction): AppState {
         const songs = args.get("songs");
         return state.set("songs", songs);
       }
+      case "SET_INSTRUMENT": {
+        return state.set("activeInstrument", args.get("instrument"));
+      }
       case "PLAY_SONG": {
         return Play(state, args, "play");
       }
@@ -96,11 +100,9 @@ export function appReducer(state: AppState, action: DispatchAction): AppState {
       }
       case "RECORD_COMPLETE": {
         return state.set("isComplete", !state.get("isComplete"));
-        // return state.set("isComplete", !state.get("isComplete"));
       }
       case "ADD_NOTE": {
         const currentRecordedNotes = state.get("recordedNotes");
-        console.log("here");
         console.log([...currentRecordedNotes, args.get("note")]);
         return state.set("recordedNotes", [...currentRecordedNotes, args.get("note")]);
       }

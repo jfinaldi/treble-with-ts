@@ -50,7 +50,7 @@ function RadioButton({ to, text, active, onClick }: RadioButtonProps): JSX.Eleme
   );
 }
 
-function Instruments({ state }: SideNavProps): JSX.Element {
+function Instruments({ state, dispatch }: SideNavProps): JSX.Element {
   const instruments: List<Instrument> = state.get("instruments");
   const activeInstrument = state.get("instrument")?.name;
   const location = useLocation();
@@ -58,7 +58,16 @@ function Instruments({ state }: SideNavProps): JSX.Element {
   return (
     <Section title="Instruments">
       {instruments.map((i) => (
-        <RadioButton key={i.name} to={`/${i.name}${location.search}`} text={i.name} active={i.name === activeInstrument} onClick={() => console.log(i.name)} />
+        <RadioButton
+          key={i.name}
+          to={`/${i.name}${location.search}`}
+          text={i.name}
+          active={i.name === activeInstrument}
+          onClick={() => {
+            console.log("active instrument", i.name);
+            dispatch(new DispatchAction("SET_INSTRUMENT", { instrument: i.name }));
+          }}
+        />
       ))}
     </Section>
   );
@@ -107,6 +116,7 @@ function Songs({ state, dispatch }: SideNavProps): JSX.Element {
 
 function Player({ state, dispatch }: SideNavProps): JSX.Element {
   const isComplete = state.get("isComplete");
+  const activeInstrument = state.get("activeInstrument");
   const [songs, setSongs] = useState(["Empty"]);
   const [selected, setSelected] = useState("");
   const [notes, setNotes] = useState("");
@@ -117,7 +127,7 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
     const postRequest = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ recordedNotes: notes, songName: songName, artist: artist }),
+      body: JSON.stringify({ recordedNotes: notes, songName: songName, artist: artist, instrument: activeInstrument }),
     };
     console.log("JSON", postRequest);
   };
@@ -144,11 +154,15 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
               type="button"
               value="Play"
               onClick={() => {
-                const getId = state
-                  .get("songs")
-                  .find((t: any) => t.get("name") === selected)
-                  .get("songId");
-                dispatch(new DispatchAction("PLAY_SONG", getId));
+                try {
+                  const getId = state
+                    .get("songs")
+                    .find((t: any) => t.get("name") === selected)
+                    .get("songId");
+                  dispatch(new DispatchAction("PLAY_SONG", getId));
+                } catch (e) {
+                  console.log("invalid song input");
+                }
               }}
             ></input>
             <input
@@ -166,7 +180,7 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
               className={classNames("ml1-ns mt1-ns mr1-ns w-40 br3")}
               id="record"
               type="button"
-              style={{ backgroundColor: state.get("isRecording") ? "pink" : ""}}
+              style={{ backgroundColor: state.get("isRecording") ? "pink" : "" }}
               value={state.get("isRecording") ? "EndSong" : "Record"}
               onClick={() => {
                 dispatch(new DispatchAction("TOGGLE_RECORDING"));
