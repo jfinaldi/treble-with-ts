@@ -22,6 +22,8 @@ function Harp({
 
   const isRecording = state.get("isRecording");
   const recordedNotes = state.get("recordedNotes");
+  const currentlyPlayingSong = state.get("currentlyPlayingSong");
+  const isSongPlaying = state.get("isSongPlaying");
 
   // useEffects
 
@@ -59,7 +61,7 @@ function Harp({
         );
       setHarpComponent(initHarpComponent);
     }
-  }, [sampler]);
+  }, [sampler, isRecording]);
 
   useEffect(() => {
     window.onfocus = () => {
@@ -71,9 +73,55 @@ function Harp({
     };
   }, []);
 
+  useEffect(() => {
+    if (
+      sampler &&
+      isSongPlaying &&
+      currentlyPlayingSong &&
+      currentlyPlayingSong?.instrumentName === "Harp"
+    ) {
+      let currentlyPlayingNote = currentlyPlayingSong.currentlyPlayingNote;
+
+      if (
+        currentlyPlayingSong.notes[currentlyPlayingNote] &&
+        mp3FileUrls[currentlyPlayingSong.notes[currentlyPlayingNote]]
+      ) {
+        playNote(
+          currentlyPlayingSong.notes[currentlyPlayingNote],
+          sampler,
+          true
+        );
+        currentlyPlayingNote++;
+        setTimeout(() => {
+          if (currentlyPlayingSong.notes.length <= currentlyPlayingNote) {
+            // clear the song and false the playing
+            dispatch(new DispatchAction("STOP_SONG"));
+            dispatch(
+              new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
+                currentlyPlayingNote: 0,
+              })
+            );
+          } else {
+            dispatch(
+              new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
+                currentlyPlayingNote,
+              })
+            );
+          }
+        }, 2 * 1000);
+      }
+    }
+  }, [isSongPlaying, currentlyPlayingSong, sampler]);
+
   // helper functions
-  const playNote = (note: string, sampler: Tone.Sampler) => {
-    if (isRecording) dispatch(new DispatchAction("ADD_NOTE", { note: note }));
+  const playNote = (
+    note: string,
+    sampler: Tone.Sampler,
+    overwriteStopRecording: boolean = false
+  ) => {
+    if (isRecording && !overwriteStopRecording) {
+      dispatch(new DispatchAction("ADD_NOTE", { note: note }));
+    }
     sampler.triggerAttack(note);
     sampler.triggerRelease("+0.01");
   };

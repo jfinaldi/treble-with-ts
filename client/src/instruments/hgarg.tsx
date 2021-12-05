@@ -1,3 +1,4 @@
+import react, { useEffect } from "react";
 import { Automatic16, NonCertified16 } from "@carbon/icons-react";
 import * as Tone from "tone";
 import { Instrument, InstrumentProps } from "../Instruments";
@@ -84,9 +85,12 @@ const connector = {
 function XyloPhone({ state, dispatch }: InstrumentProps): JSX.Element {
   const isRecording = state.get("isRecording");
 
-  const soundsOn = async (soundType: number) => {
-    if (isRecording)
-      dispatch(new DispatchAction("ADD_NOTE", { note: soundType }));
+  const soundsOn = async (
+    soundType: number,
+    overwriteStopRecording: boolean = false
+  ) => {
+    if (isRecording && !overwriteStopRecording)
+      dispatch(new DispatchAction("ADD_NOTE", { note: soundType.toString() }));
 
     let url = "http://localhost:5005/xylophone/?xylophone_sound=" + soundType;
     let data = await fetch(url);
@@ -95,6 +99,44 @@ function XyloPhone({ state, dispatch }: InstrumentProps): JSX.Element {
     let beat = new Tone.Player(audioSrc).toDestination();
     beat.autostart = true;
   };
+
+  const currentlyPlayingSong = state.get("currentlyPlayingSong");
+  const isSongPlaying = state.get("isSongPlaying");
+  useEffect(() => {
+    if (
+      isSongPlaying &&
+      currentlyPlayingSong &&
+      currentlyPlayingSong?.instrumentName === "Xylophone"
+    ) {
+      let currentlyPlayingNote = currentlyPlayingSong.currentlyPlayingNote;
+
+      if (currentlyPlayingSong.notes[currentlyPlayingNote]) {
+        soundsOn(
+          parseInt(currentlyPlayingSong.notes[currentlyPlayingNote]),
+          true
+        );
+        currentlyPlayingNote++;
+        setTimeout(() => {
+          if (currentlyPlayingSong.notes.length <= currentlyPlayingNote) {
+            // clear the song and false the playing
+            dispatch(new DispatchAction("STOP_SONG"));
+            dispatch(
+              new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
+                currentlyPlayingNote: 0,
+              })
+            );
+          } else {
+            dispatch(
+              new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
+                currentlyPlayingNote,
+              })
+            );
+          }
+        }, 2 * 1000);
+      }
+    }
+  }, [isSongPlaying, currentlyPlayingSong]);
+
   return (
     <div style={xylophone}>
       <div

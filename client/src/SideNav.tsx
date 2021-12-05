@@ -125,11 +125,14 @@ function Songs({ state, dispatch }: SideNavProps): JSX.Element {
         <div
           key={song.get("id")}
           className="f6 pointer underline flex items-center no-underline i dim txt_shdw_bld"
-          onClick={() =>
+          onClick={() => {
             dispatch(
-              new DispatchAction("PLAY_SONG", { id: song.get("songId") })
-            )
-          }
+              new DispatchAction("SET_CURRENTLY_PLAYING_SONG", {
+                song: { ...song.toJS(), currentlyPlayingNote: 0 },
+              })
+            );
+            dispatch(new DispatchAction("PLAY_SONG"));
+          }}
         >
           <Music20 className="mr1" />
           {song.get("name")}
@@ -153,7 +156,7 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
   const setStop = () => fetch("http://localhost:5005/SetStop/?Status=" + "T");
   const activeInstrument = state.get("instrument")?.name;
 
-  const submitForm = () => {
+  const submitForm = async () => {
     // FIX: WE ARE USING WEBSOCKETS NOT REST API
     // const postRequest = {
     //   method: "POST",
@@ -173,17 +176,22 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
 
     for (let key of Object.keys(checkNonEmpty)) {
       if (checkNonEmpty[key]) {
-        alert(key + " cannot be empty. Please try again.");
+        alert(key + "cannot be empty. Please try again.");
         return;
       }
     }
-    insertNewSongInDB(
+    await insertNewSongInDB(
       socket,
       activeInstrument,
       artist,
       songName,
       recordedNotes
     );
+
+    alert("successfully added the song!");
+    setArtist("");
+    setSongName("");
+    dispatch(new DispatchAction("CLEAR_NOTES"));
   };
   // useEffect(() => {
   //   const recordedNotes = JSON.parse(
@@ -293,6 +301,7 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
                 type="text"
                 name="new_song_title"
                 placeholder="Name Your Song"
+                value={songName}
                 onChange={(e) => setSongName(e.target.value)}
               />
               <input
@@ -301,6 +310,7 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
                 type="text"
                 name="new_song_artist"
                 placeholder="Artist Name Here"
+                value={artist}
                 onChange={(e) => setArtist(e.target.value)}
               />
 

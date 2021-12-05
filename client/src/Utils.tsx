@@ -10,7 +10,7 @@ export const insertNewSongInDB = async (
   songName: string,
   notes: string[]
 ) => {
-  notes = notes.map((note) => JSON.stringify(note));
+  // notes = notes.map((note) => JSON.stringify(note));
   let test = await send(socket, "insert_song", {
     instrument: instrument,
     author: author,

@@ -36,7 +36,9 @@ type DispatchActionType =
   | "ADD_NOTE"
   | "CLEAR_NOTES"
   | "SET_INSTRUMENT"
-  | "RECORD_COMPLETE";
+  | "RECORD_COMPLETE"
+  | "SET_CURRENTLY_PLAYING_NOTE"
+  | "SET_CURRENTLY_PLAYING_SONG";
 
 export class DispatchAction {
   readonly type: DispatchActionType;
@@ -74,11 +76,29 @@ export function appReducer(state: AppState, action: DispatchAction): AppState {
       case "SET_INSTRUMENT": {
         return state.set("activeInstrument", args.get("instrument"));
       }
+      case "SET_CURRENTLY_PLAYING_SONG": {
+        const toBePlayedSong = args.get("song")?.toJS();
+        return state.set("currentlyPlayingSong", {
+          ...toBePlayedSong,
+          notes: toBePlayedSong.notes.split(","),
+        });
+      }
       case "PLAY_SONG": {
-        return Play(state, args, "play");
+        return state.set("isSongPlaying", true);
+        // return Play(state, args, "play");
       }
       case "STOP_SONG": {
-        return state.delete("notes");
+        return state.set("isSongPlaying", false);
+        // return state.delete("notes");
+      }
+      case "SET_CURRENTLY_PLAYING_NOTE": {
+        console.log("here reaching");
+        const currentlyPlayingSong = state.get("currentlyPlayingSong");
+        if (!currentlyPlayingSong) return state;
+        return state.set("currentlyPlayingSong", {
+          ...state.get("currentlyPlayingSong"),
+          currentlyPlayingNote: args.get("currentlyPlayingNote"),
+        });
       }
       case "SET_LOCATION": {
         const pathname = args.getIn(["location", "pathname"], "") as string;
@@ -106,7 +126,6 @@ export function appReducer(state: AppState, action: DispatchAction): AppState {
       }
       case "ADD_NOTE": {
         const currentRecordedNotes = state.get("recordedNotes");
-        console.log([...currentRecordedNotes, args.get("note")]);
         return state.set("recordedNotes", [
           ...currentRecordedNotes,
           args.get("note"),

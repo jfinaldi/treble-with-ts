@@ -19,6 +19,31 @@ interface CatKeyProps {
   recordedNotes: any;
 }
 
+// our function to play a cat meow note
+const cat_meow = (
+  noteb: number,
+  isRecording: boolean,
+  dispatch: React.Dispatch<DispatchAction>,
+  overwriteStopRecording: boolean = false
+) => {
+  try {
+    fetch("http://localhost:5005/three")
+      .then((response) => response.json())
+      .then((rsp) => {
+        var audioSrc = "data:audio/mp3;base64," + rsp.fileContent;
+        const player = new Tone.Player(audioSrc).toDestination();
+        player.playbackRate = noteb; // the playback rate speed changes the pitch
+        player.autostart = true;
+
+        if (isRecording && !overwriteStopRecording)
+          dispatch(new DispatchAction("ADD_NOTE", { note: noteb.toString() }));
+      });
+  } catch (e) {
+    console.log("fetch error for note");
+    throw e;
+  }
+};
+
 export function CatKey({
   noteb, // this is the adjusting number for varying notes
   player,
@@ -28,40 +53,21 @@ export function CatKey({
   isRecording,
   recordedNotes,
 }: CatKeyProps): JSX.Element {
-  
   useEffect(() => {
-    if (!isRecording && recordedNotes.length > 0) dispatch(new DispatchAction("RECORD_COMPLETE"));
+    if (!isRecording && recordedNotes.length > 0)
+      dispatch(new DispatchAction("RECORD_COMPLETE"));
   }, [isRecording]);
-
-  // our function to play a cat meow note 
-  const cat_meow = () => {
-    try {
-      fetch("http://localhost:5005/three")
-        .then((response) => response.json())
-        .then((rsp) => {
-          var audioSrc = "data:audio/mp3;base64," + rsp.fileContent;
-          player = new Tone.Player(audioSrc).toDestination();
-          player.playbackRate = noteb; // the playback rate speed changes the pitch
-          player.autostart = true;
-
-          console.log("HERRERERE", isRecording);
-          if (isRecording) dispatch(new DispatchAction("ADD_NOTE", { note: noteb }));
-        });
-    } catch (e) {
-      console.log("fetch error for note");
-      throw e;
-    }
-  };
 
   // return a black paw
   if (isFlat) {
     return (
       <div
-        onClick={cat_meow}
+        onClick={() => cat_meow(noteb, isRecording, dispatch)}
         style={{
           left: `${index * 2 + 0.1}rem`,
         }}
-        className="absolute top--2-ns z-1 w3 ml1">
+        className="absolute top--2-ns z-1 w3 ml1"
+      >
         <img src={BK} alt="BK" height="110"></img>
       </div>
     );
@@ -70,11 +76,12 @@ export function CatKey({
   else {
     return (
       <div
-        onClick={cat_meow}
+        onClick={() => cat_meow(noteb, isRecording, dispatch)}
         style={{
           left: `${index * 2}rem`,
         }}
-        className="absolute top-0 z-0 w2 ml1">
+        className="absolute top-0 z-0 w2 ml1"
+      >
         <img src={WK} alt="WK" height="150"></img>
       </div>
     );
@@ -125,13 +132,57 @@ function CatPiano({ state, dispatch }: InstrumentProps): JSX.Element {
   const isRecording = state.get("isRecording");
   const recordedNotes = state.get("recordedNotes");
   useEffect(() => {
-    if (!isRecording && recordedNotes.length > 0) dispatch(new DispatchAction("RECORD_COMPLETE"));
+    if (!isRecording && recordedNotes.length > 0)
+      dispatch(new DispatchAction("RECORD_COMPLETE"));
   }, [isRecording]);
+
+  const currentlyPlayingSong = state.get("currentlyPlayingSong");
+  const isSongPlaying = state.get("isSongPlaying");
+  useEffect(() => {
+    if (
+      isSongPlaying &&
+      currentlyPlayingSong &&
+      currentlyPlayingSong?.instrumentName === "Kitty Piano"
+    ) {
+      let currentlyPlayingNote = currentlyPlayingSong.currentlyPlayingNote;
+
+      if (currentlyPlayingSong.notes[currentlyPlayingNote]) {
+        cat_meow(
+          parseFloat(currentlyPlayingSong.notes[currentlyPlayingNote]),
+          isRecording,
+          dispatch,
+          true
+        );
+        currentlyPlayingNote++;
+        setTimeout(() => {
+          if (currentlyPlayingSong.notes.length <= currentlyPlayingNote) {
+            // clear the song and false the playing
+            dispatch(new DispatchAction("STOP_SONG"));
+            dispatch(
+              new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
+                currentlyPlayingNote: 0,
+              })
+            );
+          } else {
+            dispatch(
+              new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
+                currentlyPlayingNote,
+              })
+            );
+          }
+        }, 2 * 1000);
+      }
+    }
+  }, [isSongPlaying, currentlyPlayingSong]);
 
   return (
     /*Outer box for the purple background */
     <div className={classNames("mt5 pv1 pl0")}>
-      <div className={classNames("absolute-m ml5 pv1 h5 bg-light-purple w9 br3 shadow-6")}>
+      <div
+        className={classNames(
+          "absolute-m ml5 pv1 h5 bg-light-purple w9 br3 shadow-6"
+        )}
+      >
         {/*Inner box for the actual keyboard */}
         <div className={classNames("relative flex mt5 ml4")}>
           {Range(1, 2).map((keyboard) =>
@@ -155,4 +206,4 @@ function CatPiano({ state, dispatch }: InstrumentProps): JSX.Element {
   );
 }
 
-export const _Cat = new Instrument("DJ CatPaw", CatPiano);
+export const _Cat = new Instrument("Kitty Piano", CatPiano);
