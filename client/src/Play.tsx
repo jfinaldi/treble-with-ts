@@ -32,11 +32,13 @@ const cat_meow = async (noteb: number, time_delay: number) => {
 function Play(state: AppState, args: any, mode?: PlayMode): AppState {
   switch (mode) {
     case "play":
+      console.log("play triggered");
       fetch("http://localhost:5005/SetStop/?Status=" + "F");
       var notes: string = "";
       var instrument_type: number = 0;
       try {
         //FROM PLAYLIST IN SIDENAV
+        console.log("what is args", args);
         var id: number = 0;
         if (typeof args === "number") id = args;
         else id = args.get("id");
@@ -49,7 +51,9 @@ function Play(state: AppState, args: any, mode?: PlayMode): AppState {
           .find((s: any) => s.get("songId") === id)
           .get("instrumentId");
       } catch (e) {
+        console.log("Error ", e);
         //INVALID INPUT FAILED, CATCH .FIND() UNDEFINED ERROR
+        console.log("something here?");
         return state.set("notes", "");
       }
       //PIANO
@@ -74,6 +78,14 @@ function Play(state: AppState, args: any, mode?: PlayMode): AppState {
           cat_meow(parseFloat(i), _i);
           _i += 650;
         }
+      }
+      //XYLOPHONE
+      if (instrument_type === 4) {
+        return state.set("isSongPlaying", true);
+      }
+      //HARP
+      if (instrument_type === 2) {
+        return state.set("isSongPlaying", true);
       }
       return state.set("notes", "");
     case "stop":

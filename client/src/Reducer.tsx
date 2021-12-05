@@ -84,8 +84,8 @@ export function appReducer(state: AppState, action: DispatchAction): AppState {
         });
       }
       case "PLAY_SONG": {
-        return state.set("isSongPlaying", true);
-        // return Play(state, args, "play");
+        // return state.set("isSongPlaying", true);
+        return Play(state, args, "play");
       }
       case "STOP_SONG": {
         return state.set("isSongPlaying", false);
@@ -105,17 +105,14 @@ export function appReducer(state: AppState, action: DispatchAction): AppState {
         const search = args.getIn(["location", "search"], "") as string;
 
         const instrumentName: string = pathname.substring(1);
-        const visualizerName: string =
-          new URLSearchParams(search.substring(1)).get("visualizer") ?? "";
+        const visualizerName: string = new URLSearchParams(search.substring(1)).get("visualizer") ?? "";
         const instruments: List<Instrument> = state.get("instruments");
         const visualizers: List<Visualizer> = state.get("visualizers");
 
         const instrument = instruments.find((i) => i.name === instrumentName);
         const visualizer = visualizers.find((v) => v.name === visualizerName);
 
-        return state
-          .set("instrument", instrument)
-          .set("visualizer", visualizer);
+        return state.set("instrument", instrument).set("visualizer", visualizer);
       }
       case "TOGGLE_RECORDING": {
         const surrentVal = state.get("isRecording");
@@ -126,10 +123,7 @@ export function appReducer(state: AppState, action: DispatchAction): AppState {
       }
       case "ADD_NOTE": {
         const currentRecordedNotes = state.get("recordedNotes");
-        return state.set("recordedNotes", [
-          ...currentRecordedNotes,
-          args.get("note"),
-        ]);
+        return state.set("recordedNotes", [...currentRecordedNotes, args.get("note")]);
       }
       case "CLEAR_NOTES": {
         return state.set("recordedNotes", []);
