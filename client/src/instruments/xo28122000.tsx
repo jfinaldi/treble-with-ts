@@ -3,46 +3,28 @@ import * as Tone from "tone";
 import classNames from "classnames";
 import { List, Range } from "immutable";
 import React, { useEffect, useState } from "react";
+import { DispatchAction } from "../Reducer";
 
 // project imports
 import { Instrument, InstrumentProps } from "../Instruments";
 
 import "./harp.css";
 
-const buildStringComponent = (
-  id: string,
-  note: string,
-  sampler: Tone.Sampler,
-  stringColor: "red" | "blue" | "black",
-  paddingTop: number
-) => {
-  return (
-    <div
-      className="stringContainer"
-      style={{
-        marginTop: paddingTop * 5,
-      }}
-    >
-      <div
-        id={id}
-        className="string"
-        style={{
-          borderLeftColor: stringColor,
-        }}
-        onMouseOver={(eve) => {
-          if (document.hasFocus()) {
-            sampler.triggerAttack(note);
-            sampler.triggerRelease("+0.01");
-          }
-        }}
-      ></div>
-    </div>
-  );
-};
-
-function Harp({ synth, setSynth }: InstrumentProps): JSX.Element {
+function Harp({
+  synth,
+  setSynth,
+  state,
+  dispatch,
+}: InstrumentProps): JSX.Element {
   const [harpComponent, setHarpComponent]: [JSX.Element[], any] = useState([]);
   const [sampler, setSampler]: [Tone.Sampler | undefined, any] = useState();
+  const [isWindowBlured, setIsWindowBlured] = useState(!document.hasFocus());
+
+  const isRecording = state.get("isRecording");
+  const recordedNotes = state.get("recordedNotes");
+
+  // useEffects
+
   useEffect(() => {
     setSampler(() =>
       new Tone.Sampler({
@@ -79,7 +61,6 @@ function Harp({ synth, setSynth }: InstrumentProps): JSX.Element {
     }
   }, [sampler]);
 
-  const [isWindowBlured, setIsWindowBlured] = useState(!document.hasFocus());
   useEffect(() => {
     window.onfocus = () => {
       setIsWindowBlured(false);
@@ -89,6 +70,43 @@ function Harp({ synth, setSynth }: InstrumentProps): JSX.Element {
       setIsWindowBlured(true);
     };
   }, []);
+
+  // helper functions
+  const playNote = (note: string, sampler: Tone.Sampler) => {
+    if (isRecording) dispatch(new DispatchAction("ADD_NOTE", { note: note }));
+    sampler.triggerAttack(note);
+    sampler.triggerRelease("+0.01");
+  };
+
+  const buildStringComponent = (
+    id: string,
+    note: string,
+    sampler: Tone.Sampler,
+    stringColor: "red" | "blue" | "black",
+    paddingTop: number
+  ) => {
+    return (
+      <div
+        className="stringContainer"
+        style={{
+          marginTop: paddingTop * 5,
+        }}
+      >
+        <div
+          id={id}
+          className="string"
+          style={{
+            borderLeftColor: stringColor,
+          }}
+          onMouseOver={(eve) => {
+            if (document.hasFocus()) {
+              playNote(note, sampler);
+            }
+          }}
+        ></div>
+      </div>
+    );
+  };
 
   return (
     <div className="pv4">
