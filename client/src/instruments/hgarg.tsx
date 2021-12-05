@@ -1,6 +1,7 @@
 import { Automatic16, NonCertified16 } from "@carbon/icons-react";
 import * as Tone from "tone";
-import { Instrument } from "../Instruments";
+import { Instrument, InstrumentProps } from "../Instruments";
+import { DispatchAction } from "../Reducer";
 
 const buttonStyle = {
   padding: "10px",
@@ -16,49 +17,49 @@ const buttonStyle = {
 const h1 = {
   height: "200px",
   backgroundColor: "#660033",
-  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
 };
 
 const h2 = {
   height: "185px",
   backgroundColor: "#00CCCC",
-  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
 };
 
 const h3 = {
   height: "170px",
   backgroundColor: "#006666",
-  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
 };
 
 const h4 = {
   height: "155px",
   backgroundColor: "#666600",
-  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
 };
 
 const h5 = {
   height: "140px",
   backgroundColor: "#B2FF66",
-  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
 };
 
 const h6 = {
   height: "125px",
   backgroundColor: "#003366",
-  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
 };
 
 const h7 = {
   height: "110px",
   backgroundColor: "#FF8000",
-  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
 };
 
 const h8 = {
   height: "95px",
   backgroundColor: "#FF0000",
-  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
+  boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
 };
 
 const xylophone = {
@@ -80,8 +81,13 @@ const connector = {
   marginTop: "100px",
 };
 
-function XyloPhone(): JSX.Element {
+function XyloPhone({ state, dispatch }: InstrumentProps): JSX.Element {
+  const isRecording = state.get("isRecording");
+
   const soundsOn = async (soundType: number) => {
+    if (isRecording)
+      dispatch(new DispatchAction("ADD_NOTE", { note: soundType }));
+
     let url = "http://localhost:5005/xylophone/?xylophone_sound=" + soundType;
     let data = await fetch(url);
     let resJson = await data.json();
@@ -99,11 +105,14 @@ function XyloPhone(): JSX.Element {
           marginTop: "135px",
           marginBottom: "-110px",
           zIndex: 1,
-          boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )"
+          boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
         }}
       />
       <div>
-        <button style={{ ...buttonStyle, ...h1, zIndex: 100 }} onClick={() => soundsOn(1)}>
+        <button
+          style={{ ...buttonStyle, ...h1, zIndex: 100 }}
+          onClick={() => soundsOn(1)}
+        >
           c
         </button>
         <button style={{ ...buttonStyle, ...h2 }} onClick={() => soundsOn(2)}>
