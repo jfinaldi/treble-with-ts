@@ -100,6 +100,16 @@ app.get("/xylophone", (req: any, res: any) => {
     res.json(returnData);
   });
 });
+app.get("/harp", (req: any, res: any) => {
+  const beat_sound = `${req.query.harp_sound}.mp3`;
+  const returnData: any = {};
+  const filePath: string = path.join(__dirname, "../") + "sounds/harp/" + beat_sound;
+  fs.readFile(filePath, function (err: any, file: any) {
+    var base64File = Buffer.from(file, "binary").toString("base64");
+    returnData.fileContent = base64File;
+    res.json(returnData);
+  });
+});
 var STATE = false;
 app.get("/StatusStop", (req: any, res: any) => {
   res.json({ status: STATE });
