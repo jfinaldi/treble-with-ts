@@ -10,7 +10,7 @@ const urls: string[] = [ "http://localhost:5005/drums/?type_beat=",
 
 const playNote = async (instrument: number, note: string | number, time_delay: number) => {
   await sleep(time_delay);
-  console.log("Playing a note with instrument: ", instrument, "\n");
+  console.log("Note: ", note, "\n");
   let url: string;
   if(instrument === 3) url = urls[instrument - 1];
   else url = urls[instrument - 1] + (note as string);
@@ -64,6 +64,7 @@ function Play(state: AppState, args: any, mode?: PlayMode): AppState {
       }
       //CAT PIANO
       if (instrument_type === 3) {
+        console.log(notes);
         var cat_notes: string[] = notes.split(",");
         var _i: number = 650;
         for (let i of cat_notes) {
@@ -73,6 +74,7 @@ function Play(state: AppState, args: any, mode?: PlayMode): AppState {
       }
       //XYLOPHONE
       if (instrument_type === 4) {
+        console.log(notes);
         var beats: string[] = notes.split(",");
         var _i: number = 500;
         for (let i of beats) {
