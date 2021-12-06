@@ -1,48 +1,28 @@
 // 3rd party library imports
 import * as Tone from "tone";
-import classNames from "classnames";
-import { List, Range } from "immutable";
 import React, { useEffect, useState } from "react";
+import { DispatchAction } from "../Reducer";
 
 // project imports
 import { Instrument, InstrumentProps } from "../Instruments";
 
 import "./harp.css";
 
-const buildStringComponent = (
-  id: string,
-  note: string,
-  sampler: Tone.Sampler,
-  stringColor: "red" | "blue" | "black",
-  paddingTop: number
-) => {
-  return (
-    <div
-      className="stringContainer"
-      style={{
-        marginTop: paddingTop * 5,
-      }}
-    >
-      <div
-        id={id}
-        className="string"
-        style={{
-          borderLeftColor: stringColor,
-        }}
-        onMouseOver={(eve) => {
-          if (document.hasFocus()) {
-            sampler.triggerAttack(note);
-            sampler.triggerRelease("+0.01");
-          }
-        }}
-      ></div>
-    </div>
-  );
-};
-
-function Harp({ synth, setSynth }: InstrumentProps): JSX.Element {
+function Harp({
+  state,
+  dispatch,
+}: InstrumentProps): JSX.Element {
   const [harpComponent, setHarpComponent]: [JSX.Element[], any] = useState([]);
   const [sampler, setSampler]: [Tone.Sampler | undefined, any] = useState();
+  const [isWindowBlured, setIsWindowBlured] = useState(!document.hasFocus());
+
+  const isRecording = state.get("isRecording");
+  const recordedNotes = state.get("recordedNotes");
+  const currentlyPlayingSong = state.get("currentlyPlayingSong");
+  const isSongPlaying = state.get("isSongPlaying");
+
+  // useEffects
+
   useEffect(() => {
     setSampler(() =>
       new Tone.Sampler({
@@ -77,9 +57,8 @@ function Harp({ synth, setSynth }: InstrumentProps): JSX.Element {
         );
       setHarpComponent(initHarpComponent);
     }
-  }, [sampler]);
+  }, [sampler, isRecording]);
 
-  const [isWindowBlured, setIsWindowBlured] = useState(!document.hasFocus());
   useEffect(() => {
     window.onfocus = () => {
       setIsWindowBlured(false);
@@ -89,6 +68,89 @@ function Harp({ synth, setSynth }: InstrumentProps): JSX.Element {
       setIsWindowBlured(true);
     };
   }, []);
+
+  useEffect(() => {
+    if (
+      sampler &&
+      isSongPlaying &&
+      currentlyPlayingSong &&
+      currentlyPlayingSong?.instrumentName === "Harp"
+    ) {
+      let currentlyPlayingNote = currentlyPlayingSong.currentlyPlayingNote;
+
+      if (
+        currentlyPlayingSong.notes[currentlyPlayingNote] &&
+        mp3FileUrls[currentlyPlayingSong.notes[currentlyPlayingNote]]
+      ) {
+        playNote(
+          currentlyPlayingSong.notes[currentlyPlayingNote],
+          sampler,
+          true
+        );
+        currentlyPlayingNote++;
+        setTimeout(() => {
+          if (currentlyPlayingSong.notes.length <= currentlyPlayingNote) {
+            // clear the song and false the playing
+            dispatch(new DispatchAction("STOP_SONG"));
+            dispatch(
+              new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
+                currentlyPlayingNote: 0,
+              })
+            );
+          } else {
+            dispatch(
+              new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
+                currentlyPlayingNote,
+              })
+            );
+          }
+        }, 2 * 1000);
+      }
+    }
+  }, [isSongPlaying, currentlyPlayingSong, sampler]);
+
+  // helper functions
+  const playNote = (
+    note: string,
+    sampler: Tone.Sampler,
+    overwriteStopRecording: boolean = false
+  ) => {
+    if (isRecording && !overwriteStopRecording) {
+      dispatch(new DispatchAction("ADD_NOTE", { note: note }));
+    }
+    sampler.triggerAttack(note);
+    sampler.triggerRelease("+0.01");
+  };
+
+  const buildStringComponent = (
+    id: string,
+    note: string,
+    sampler: Tone.Sampler,
+    stringColor: "red" | "blue" | "black",
+    paddingTop: number
+  ) => {
+    return (
+      <div
+        className="stringContainer"
+        style={{
+          marginTop: paddingTop * 5,
+        }}
+      >
+        <div
+          id={id}
+          className="string"
+          style={{
+            borderLeftColor: stringColor,
+          }}
+          onMouseOver={(eve) => {
+            if (document.hasFocus()) {
+              playNote(note, sampler);
+            }
+          }}
+        ></div>
+      </div>
+    );
+  };
 
   return (
     <div className="pv4">

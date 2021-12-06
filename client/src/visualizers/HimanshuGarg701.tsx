@@ -24,7 +24,7 @@ export const RockVisualizer = new Visualizer(
     const orgMin = Math.min(...values);
     const orgMax = Math.max(...values);
     p5.beginShape();
-    // p5.fill(255);
+    
     for (let i = 0; i <= 180; i++) {
       let index = Math.floor(p5.map(i, 0, width, 0, values.length - 1));
 
