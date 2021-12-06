@@ -2,49 +2,15 @@ import * as Tone from "tone";
 import { AppState } from "./State";
 type PlayMode = "play" | "stop";
 const sleep = (milliseconds: any) => new Promise((resolve) => setTimeout(resolve, milliseconds));
-const drum_boom = async (type_beat: number, time_delay: number) => {
+
+const urls: string[] = [ "http://localhost:5005/drums/?type_beat=",
+                         "http://localhost:5005/harp/?harp_sound=",
+                         "http://localhost:5005/three",
+                         "http://localhost:5005/xylophone/?xylophone_sound=" ];
+
+const playNote = async (instrument: number, note: string | number, time_delay: number) => {
   await sleep(time_delay);
-  let rsp_url = "http://localhost:5005/drums/?type_beat=" + type_beat;
-  let rsp_data = await fetch(rsp_url);
-  let statusCheck = await fetch("http://localhost:5005/StatusStop");
-  let status = await statusCheck.json();
-  if (!status.status) {
-    let rsp_json = await rsp_data.json();
-    let audioSrc = "data:audo/wav;base64," + rsp_json.fileContent;
-    let beat = new Tone.Player(audioSrc).toDestination();
-    beat.autostart = true;
-  }
-};
-const cat_meow = async (noteb: number, time_delay: number) => {
-  await sleep(time_delay);
-  let rsp_url = "http://localhost:5005/three";
-  let rsp_data = await fetch(rsp_url);
-  let rsp_json = await rsp_data.json();
-  let statusCheck = await fetch("http://localhost:5005/StatusStop");
-  let status = await statusCheck.json();
-  if (!status.status) {
-    let audioSrc = "data:audo/wav;base64," + rsp_json.fileContent;
-    let beat = new Tone.Player(audioSrc).toDestination();
-    beat.playbackRate = noteb;
-    beat.autostart = true;
-  }
-};
-const xylo_tap = async (soundType: number, time_delay: number) => {
-  await sleep(time_delay);
-  let url = "http://localhost:5005/xylophone/?xylophone_sound=" + soundType;
-  let rsp_data = await fetch(url);
-  let rsp_json = await rsp_data.json();
-  let statusCheck = await fetch("http://localhost:5005/StatusStop");
-  let status = await statusCheck.json();
-  if (!status.status) {
-    let audioSrc = "data:audo/wav;base64," + rsp_json.fileContent;
-    let beat = new Tone.Player(audioSrc).toDestination();
-    beat.autostart = true;
-  }
-};
-const harpo = async (soundType: string, time_delay: number) => {
-  await sleep(time_delay);
-  let url = "http://localhost:5005/harp/?harp_sound=" + soundType;
+  let url: string = urls[instrument - 1] + note;
   let rsp_data = await fetch(url);
   let rsp_json = await rsp_data.json();
   let statusCheck = await fetch("http://localhost:5005/StatusStop");
@@ -59,13 +25,10 @@ const harpo = async (soundType: string, time_delay: number) => {
 function Play(state: AppState, args: any, mode?: PlayMode): AppState {
   switch (mode) {
     case "play":
-      console.log("play triggered");
       fetch("http://localhost:5005/SetStop/?Status=" + "F");
       var notes: string = "";
       var instrument_type: number = 0;
       try {
-        //FROM PLAYLIST IN SIDENAV
-        console.log("what is args", args);
         var id: number = 0;
         if (typeof args === "number") id = args;
         else id = args.get("id");
@@ -79,8 +42,6 @@ function Play(state: AppState, args: any, mode?: PlayMode): AppState {
           .get("instrumentId");
       } catch (e) {
         console.log("Error ", e);
-        //INVALID INPUT FAILED, CATCH .FIND() UNDEFINED ERROR
-        console.log("something here?");
         return state.set("notes", "");
       }
       //PIANO
@@ -93,7 +54,7 @@ function Play(state: AppState, args: any, mode?: PlayMode): AppState {
         var drum_beats: string[] = notes.split(",");
         var _i: number = 500;
         for (let i of drum_beats) {
-          drum_boom(parseInt(i), _i);
+          playNote(instrument_type, parseInt(i), _i);
           _i += 500;
         }
       }
@@ -102,30 +63,27 @@ function Play(state: AppState, args: any, mode?: PlayMode): AppState {
         var cat_notes: string[] = notes.split(",");
         var _i: number = 650;
         for (let i of cat_notes) {
-          cat_meow(parseFloat(i), _i);
+          playNote(instrument_type, parseFloat(i), _i);
           _i += 650;
         }
       }
       //XYLOPHONE
       if (instrument_type === 4) {
-        console.log("xylo triggered\n", notes);
         var beats: string[] = notes.split(",");
         var _i: number = 500;
         for (let i of beats) {
-          xylo_tap(parseInt(i), _i);
+          playNote(instrument_type, parseInt(i), _i);
           _i += 500;
         }
-        //return state.set("isSongPlaying", true);
       }
       //HARP
       if (instrument_type === 2) {
         var beats: string[] = notes.split(",");
         var _i: number = 500;
         for (let i of beats) {
-          harpo(i, _i);
+          playNote(instrument_type, i, _i);
           _i += 500;
         }
-        // return state.set("isSongPlaying", true);
       }
       return state.set("notes", "");
     case "stop":
