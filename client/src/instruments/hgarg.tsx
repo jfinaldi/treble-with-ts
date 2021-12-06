@@ -100,42 +100,42 @@ function XyloPhone({ state, dispatch }: InstrumentProps): JSX.Element {
     beat.autostart = true;
   };
 
-  const currentlyPlayingSong = state.get("currentlyPlayingSong");
-  const isSongPlaying = state.get("isSongPlaying");
-  useEffect(() => {
-    if (
-      isSongPlaying &&
-      currentlyPlayingSong &&
-      currentlyPlayingSong?.instrumentName === "Xylophone"
-    ) {
-      let currentlyPlayingNote = currentlyPlayingSong.currentlyPlayingNote;
+  // const currentlyPlayingSong = state.get("currentlyPlayingSong");
+  // const isSongPlaying = state.get("isSongPlaying");
+  // useEffect(() => {
+  //   if (
+  //     isSongPlaying &&
+  //     currentlyPlayingSong &&
+  //     currentlyPlayingSong?.instrumentName === "Xylophone"
+  //   ) {
+  //     let currentlyPlayingNote = currentlyPlayingSong.currentlyPlayingNote;
 
-      if (currentlyPlayingSong.notes[currentlyPlayingNote]) {
-        soundsOn(
-          parseInt(currentlyPlayingSong.notes[currentlyPlayingNote]),
-          true
-        );
-        currentlyPlayingNote++;
-        setTimeout(() => {
-          if (currentlyPlayingSong.notes.length <= currentlyPlayingNote) {
-            // clear the song and false the playing
-            dispatch(new DispatchAction("STOP_SONG"));
-            dispatch(
-              new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
-                currentlyPlayingNote: 0,
-              })
-            );
-          } else {
-            dispatch(
-              new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
-                currentlyPlayingNote,
-              })
-            );
-          }
-        }, 2 * 1000);
-      }
-    }
-  }, [isSongPlaying, currentlyPlayingSong]);
+  //     if (currentlyPlayingSong.notes[currentlyPlayingNote]) {
+  //       soundsOn(
+  //         parseInt(currentlyPlayingSong.notes[currentlyPlayingNote]),
+  //         true
+  //       );
+  //       currentlyPlayingNote++;
+  //       setTimeout(() => {
+  //         if (currentlyPlayingSong.notes.length <= currentlyPlayingNote) {
+  //           // clear the song and false the playing
+  //           dispatch(new DispatchAction("STOP_SONG"));
+  //           dispatch(
+  //             new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
+  //               currentlyPlayingNote: 0,
+  //             })
+  //           );
+  //         } else {
+  //           dispatch(
+  //             new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
+  //               currentlyPlayingNote,
+  //             })
+  //           );
+  //         }
+  //       }, 2 * 1000);
+  //     }
+  //   }
+  // }, [isSongPlaying, currentlyPlayingSong]);
 
   return (
     <div style={xylophone}>

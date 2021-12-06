@@ -29,6 +29,20 @@ const cat_meow = async (noteb: number, time_delay: number) => {
     beat.autostart = true;
   }
 };
+const xylo_tap = async (soundType: number, time_delay: number) => {
+  await sleep(time_delay);
+  let url = "http://localhost:5005/xylophone/?xylophone_sound=" + soundType;
+  let rsp_data = await fetch(url);
+  let rsp_json = await rsp_data.json();
+  let statusCheck = await fetch("http://localhost:5005/StatusStop");
+  let status = await statusCheck.json();
+  if (!status.status) {
+    let audioSrc = "data:audo/wav;base64," + rsp_json.fileContent;
+    let beat = new Tone.Player(audioSrc).toDestination();
+    beat.autostart = true;
+  }
+};
+
 function Play(state: AppState, args: any, mode?: PlayMode): AppState {
   switch (mode) {
     case "play":
@@ -81,7 +95,14 @@ function Play(state: AppState, args: any, mode?: PlayMode): AppState {
       }
       //XYLOPHONE
       if (instrument_type === 4) {
-        return state.set("isSongPlaying", true);
+        console.log("xylo triggered\n", notes);
+        var beats: string[] = notes.split(",");
+        var _i: number = 500;
+        for (let i of beats) {
+          xylo_tap(parseInt(i), _i);
+          _i += 500;
+        }
+        //return state.set("isSongPlaying", true);
       }
       //HARP
       if (instrument_type === 2) {
