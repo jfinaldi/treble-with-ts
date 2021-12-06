@@ -1,7 +1,5 @@
 // 3rd party library imports
 import * as Tone from "tone";
-import classNames from "classnames";
-import { List, Range } from "immutable";
 import React, { useEffect, useState } from "react";
 import { DispatchAction } from "../Reducer";
 
@@ -11,8 +9,6 @@ import { Instrument, InstrumentProps } from "../Instruments";
 import "./harp.css";
 
 function Harp({
-  synth,
-  setSynth,
   state,
   dispatch,
 }: InstrumentProps): JSX.Element {

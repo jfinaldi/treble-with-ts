@@ -5,7 +5,7 @@ import { List, Map } from "immutable";
 import { RippleVisualizer } from "./visualizers/asingh";
 import { WaveformVisualizer } from "./visualizers/Waveform";
 import { RockVisualizer } from "./visualizers/HimanshuGarg701";
-import { CatVisualizer } from "./visualizers/jfinaldi_vis";
+import { CatVisualizer } from "./visualizers/jfinaldi";
 import { PianoInstrument } from "./instruments/Piano";
 import { _Cat } from "./instruments/jfinaldi";
 import { _Drums } from "./instruments/asingh";

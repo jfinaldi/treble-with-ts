@@ -12,7 +12,7 @@ import { DispatchAction } from "./Reducer";
 import { AppState } from "./State";
 import { Instrument } from "./Instruments";
 import { Visualizer } from "./Visualizers";
-import { Play } from "./Play";
+//import { Play } from "./Play";
 import { insertNewSongInDB } from "./Utils";
 /** ------------------------------------------------------------------------ **
  * All the components in the side navigation.
@@ -110,8 +110,6 @@ function Songs({ state, dispatch }: SideNavProps): JSX.Element {
                 song: { ...song.toJS(), currentlyPlayingNote: 0 },
               })
             );
-            //dispatch(new DispatchAction("PLAY_SONG"));
-            // onClick={() => dispatch(new DispatchAction("PLAY_SONG", { id: song.get("songId") }))}
             dispatch(new DispatchAction("PLAY_SONG", { id: song.get("songId") }));
           }}
         >
@@ -124,33 +122,22 @@ function Songs({ state, dispatch }: SideNavProps): JSX.Element {
 }
 
 function Player({ state, dispatch }: SideNavProps): JSX.Element {
-  const isComplete = state.get("isComplete");
-  // const activeInstrument = state.get("activeInstrument");
-  const isRecording = state.get("isRecording");
+  // const isComplete = state.get("isComplete");
+  // const isRecording = state.get("isRecording");
   const recordedNotes = state.get("recordedNotes");
   const socket = state.get("socket");
   const [songs, setSongs] = useState(["Empty"]);
   const [selected, setSelected] = useState("");
-  const [notes, setNotes] = useState("");
+  // const [notes, setNotes] = useState("");
   const [artist, setArtist] = useState("");
   const [songName, setSongName] = useState("");
   const setStop = () => fetch("http://localhost:5005/SetStop/?Status=" + "T");
   const activeInstrument = state.get("instrument")?.name;
   useEffect(() => {
     setSongs(state.get("songs", List()).reduce((acc: any, song: any) => acc.concat([song.get("name")]), [] as any[]));
-    // fetchData();
   }, [state]);
 
   const submitForm = async () => {
-    // FIX: WE ARE USING WEBSOCKETS NOT REST API
-    // const postRequest = {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ recordedNotes: notes, songName: songName, artist: artist, instrument: activeInstrument }),
-    // };
-    // console.log("JSON", postRequest);
-    // TODO: Insert on the backend
-
     const checkNonEmpty: { [key: string]: boolean } = {
       Socket: !socket,
       Instrument: !activeInstrument || activeInstrument.length <= 0,
@@ -171,21 +158,8 @@ function Player({ state, dispatch }: SideNavProps): JSX.Element {
     setArtist("");
     setSongName("");
     dispatch(new DispatchAction("CLEAR_NOTES"));
-    // setSongs(state.get("songs", List()).reduce((acc: any, song: any) => acc.concat([song.get("name")]), [] as any[]));
-    // window.location.reload();
   };
-  // useEffect(() => {
-  //   const recordedNotes = JSON.parse(
-  //     JSON.stringify(state.get("recordedNotes"))
-  //   );
-  //   setNotes(recordedNotes);
-  //   dispatch(new DispatchAction("CLEAR_NOTES"));
-  // }, [isComplete]);
-  // useEffect(() => {
-  //   if (!isRecording && recordedNotes.length > 0){
-  //     // push to backend and
-  //   }
-  // }, [isRecording]);
+  
   useEffect(() => {
     setSongs(state.get("songs", List()).reduce((acc: any, song: any) => acc.concat([song.get("name")]), [] as any[]));
   }, [state]);

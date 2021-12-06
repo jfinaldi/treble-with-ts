@@ -46,7 +46,6 @@ const cat_meow = (
 
 export function CatKey({
   noteb, // this is the adjusting number for varying notes
-  player,
   isFlat,
   index,
   dispatch,
@@ -136,44 +135,44 @@ function CatPiano({ state, dispatch }: InstrumentProps): JSX.Element {
       dispatch(new DispatchAction("RECORD_COMPLETE"));
   }, [isRecording]);
 
-  const currentlyPlayingSong = state.get("currentlyPlayingSong");
-  const isSongPlaying = state.get("isSongPlaying");
-  useEffect(() => {
-    if (
-      isSongPlaying &&
-      currentlyPlayingSong &&
-      currentlyPlayingSong?.instrumentName === "Kitty Piano"
-    ) {
-      let currentlyPlayingNote = currentlyPlayingSong.currentlyPlayingNote;
+  // const currentlyPlayingSong = state.get("currentlyPlayingSong");
+  // const isSongPlaying = state.get("isSongPlaying");
+  // useEffect(() => {
+  //   if (
+  //     isSongPlaying &&
+  //     currentlyPlayingSong &&
+  //     currentlyPlayingSong?.instrumentName === "DJ Catpaw"
+  //   ) {
+  //     let currentlyPlayingNote = currentlyPlayingSong.currentlyPlayingNote;
 
-      if (currentlyPlayingSong.notes[currentlyPlayingNote]) {
-        cat_meow(
-          parseFloat(currentlyPlayingSong.notes[currentlyPlayingNote]),
-          isRecording,
-          dispatch,
-          true
-        );
-        currentlyPlayingNote++;
-        setTimeout(() => {
-          if (currentlyPlayingSong.notes.length <= currentlyPlayingNote) {
-            // clear the song and false the playing
-            dispatch(new DispatchAction("STOP_SONG"));
-            dispatch(
-              new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
-                currentlyPlayingNote: 0,
-              })
-            );
-          } else {
-            dispatch(
-              new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
-                currentlyPlayingNote,
-              })
-            );
-          }
-        }, 2 * 1000);
-      }
-    }
-  }, [isSongPlaying, currentlyPlayingSong]);
+  //     if (currentlyPlayingSong.notes[currentlyPlayingNote]) {
+  //       cat_meow(
+  //         parseFloat(currentlyPlayingSong.notes[currentlyPlayingNote]),
+  //         isRecording,
+  //         dispatch,
+  //         true
+  //       );
+  //       currentlyPlayingNote++;
+  //       setTimeout(() => {
+  //         if (currentlyPlayingSong.notes.length <= currentlyPlayingNote) {
+  //           // clear the song and false the playing
+  //           dispatch(new DispatchAction("STOP_SONG"));
+  //           dispatch(
+  //             new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
+  //               currentlyPlayingNote: 0,
+  //             })
+  //           );
+  //         } else {
+  //           dispatch(
+  //             new DispatchAction("SET_CURRENTLY_PLAYING_NOTE", {
+  //               currentlyPlayingNote,
+  //             })
+  //           );
+  //         }
+  //       }, 2 * 1000);
+  //     }
+  //   }
+  // }, [isSongPlaying, currentlyPlayingSong]);
 
   return (
     /*Outer box for the purple background */
@@ -206,4 +205,4 @@ function CatPiano({ state, dispatch }: InstrumentProps): JSX.Element {
   );
 }
 
-export const _Cat = new Instrument("Kitty Piano", CatPiano);
+export const _Cat = new Instrument('DJ Catpaw', CatPiano);

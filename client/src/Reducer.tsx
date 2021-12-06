@@ -84,12 +84,10 @@ export function appReducer(state: AppState, action: DispatchAction): AppState {
         });
       }
       case "PLAY_SONG": {
-        // return state.set("isSongPlaying", true);
         return Play(state, args, "play");
       }
       case "STOP_SONG": {
         return state.set("isSongPlaying", false);
-        // return state.delete("notes");
       }
       case "SET_CURRENTLY_PLAYING_NOTE": {
         console.log("here reaching");

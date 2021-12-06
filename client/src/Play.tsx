@@ -10,15 +10,19 @@ const urls: string[] = [ "http://localhost:5005/drums/?type_beat=",
 
 const playNote = async (instrument: number, note: string | number, time_delay: number) => {
   await sleep(time_delay);
-  let url: string = urls[instrument - 1] + note;
+  console.log("Playing a note with instrument: ", instrument, "\n");
+  let url: string;
+  if(instrument === 3) url = urls[instrument - 1];
+  else url = urls[instrument - 1] + (note as string);
   let rsp_data = await fetch(url);
   let rsp_json = await rsp_data.json();
   let statusCheck = await fetch("http://localhost:5005/StatusStop");
   let status = await statusCheck.json();
   if (!status.status) {
     let audioSrc = "data:audo/wav;base64," + rsp_json.fileContent;
-    let beat = new Tone.Player(audioSrc).toDestination();
-    beat.autostart = true;
+    let player = new Tone.Player(audioSrc).toDestination();
+    if(instrument === 3) player.playbackRate = note as number;
+    player.autostart = true;
   }
 };
 
