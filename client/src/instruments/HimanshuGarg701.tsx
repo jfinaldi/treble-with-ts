@@ -3,7 +3,8 @@ import { Automatic16, NonCertified16 } from "@carbon/icons-react";
 import * as Tone from "tone";
 import { Instrument, InstrumentProps } from "../Instruments";
 import { DispatchAction } from "../Reducer";
-
+import "./drums.css";
+import { url } from "inspector";
 const buttonStyle = {
   padding: "10px",
   width: "60px",
@@ -19,48 +20,56 @@ const h1 = {
   height: "200px",
   backgroundColor: "#660033",
   boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
+  cursor: "url('../img/drums/drum_wand.png'),auto",
 };
 
 const h2 = {
   height: "185px",
   backgroundColor: "#00CCCC",
   boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
+  cursor: "url('../img/drums/drum_wand.png'),auto",
 };
 
 const h3 = {
   height: "170px",
   backgroundColor: "#006666",
   boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
+  cursor: "url('../img/drums/drum_wand.png'),auto",
 };
 
 const h4 = {
   height: "155px",
   backgroundColor: "#666600",
   boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
+  cursor: "url('../img/drums/drum_wand.png'),auto",
 };
 
 const h5 = {
   height: "140px",
   backgroundColor: "#B2FF66",
   boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
+  cursor: "url('../img/drums/drum_wand.png'),auto",
 };
 
 const h6 = {
   height: "125px",
   backgroundColor: "#003366",
   boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
+  cursor: "url('../img/drums/drum_wand.png'),auto",
 };
 
 const h7 = {
   height: "110px",
   backgroundColor: "#FF8000",
   boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
+  cursor: "url('../img/drums/drum_wand.png'),auto",
 };
 
 const h8 = {
   height: "95px",
   backgroundColor: "#FF0000",
   boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
+  cursor: "url('../img/drums/drum_wand.png'),auto",
 };
 
 const xylophone = {
@@ -73,6 +82,7 @@ const xylophone = {
   // marginBottom: "50px",
   marginTop: "100px",
   // marginUp: "100px",
+  cursor: "url('../img/drums/drum_wand.png'),auto",
 };
 
 const connector = {
@@ -85,12 +95,8 @@ const connector = {
 function XyloPhone({ state, dispatch }: InstrumentProps): JSX.Element {
   const isRecording = state.get("isRecording");
 
-  const soundsOn = async (
-    soundType: number,
-    overwriteStopRecording: boolean = false
-  ) => {
-    if (isRecording && !overwriteStopRecording)
-      dispatch(new DispatchAction("ADD_NOTE", { note: soundType.toString() }));
+  const soundsOn = async (soundType: number, overwriteStopRecording: boolean = false) => {
+    if (isRecording && !overwriteStopRecording) dispatch(new DispatchAction("ADD_NOTE", { note: soundType.toString() }));
 
     let url = "http://localhost:5005/xylophone/?xylophone_sound=" + soundType;
     let data = await fetch(url);
@@ -138,7 +144,7 @@ function XyloPhone({ state, dispatch }: InstrumentProps): JSX.Element {
   // }, [isSongPlaying, currentlyPlayingSong]);
 
   return (
-    <div style={xylophone}>
+    <div style={xylophone} id="drum_container">
       <div
         style={{
           width: "585px",
@@ -148,13 +154,11 @@ function XyloPhone({ state, dispatch }: InstrumentProps): JSX.Element {
           marginBottom: "-110px",
           zIndex: 1,
           boxShadow: "4px 4px 2px 0 rgba( 0, 0, 0, .2 )",
+          cursor: "url('../img/drums/drum_wand.png'),auto",
         }}
       />
-      <div>
-        <button
-          style={{ ...buttonStyle, ...h1, zIndex: 100 }}
-          onClick={() => soundsOn(1)}
-        >
+      <div id="drum_container">
+        <button style={{ ...buttonStyle, ...h1, zIndex: 100 }} onClick={() => soundsOn(1)}>
           c
         </button>
         <button style={{ ...buttonStyle, ...h2 }} onClick={() => soundsOn(2)}>
