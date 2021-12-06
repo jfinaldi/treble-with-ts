@@ -4,14 +4,14 @@ import { List, Map } from "immutable";
 // project dependencies
 import { RippleVisualizer } from "./visualizers/asingh";
 import { WaveformVisualizer } from "./visualizers/Waveform";
-import { RockVisualizer } from "./visualizers/hgarg";
+import { RockVisualizer } from "./visualizers/HimanshuGarg701";
 import { CatVisualizer } from "./visualizers/jfinaldi_vis";
 import { PianoInstrument } from "./instruments/Piano";
 import { _Cat } from "./instruments/jfinaldi";
 import { _Drums } from "./instruments/asingh";
 import { HarpInstrument } from "./instruments/xo28122000";
 
-import { _Xylophone } from "./instruments/hgarg";
+import { _Xylophone } from "./instruments/HimanshuGarg701";
 import { FancyVisualizer } from "./visualizers/xo28122000";
 /** ------------------------------------------------------------------------ **
  * The entire application state is stored in AppState.
